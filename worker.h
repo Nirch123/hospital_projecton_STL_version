@@ -7,10 +7,10 @@ class Department;
 class Worker : public Person
 {
 public:
-	Worker(const char* name, const int id, Date& birthdate, eGender gender, Department* department = nullptr);
+	Worker(const char* name, const int id, Date& birthdate, eGender gender, Department* department);
 	~Worker();
 	const int getWorkerId() const;
-	const char* getWorkerDepartment() const;
+	//const char* getWorkerDepartment() const;
 	bool setWorkerDepartment(Department& new_department);
 
 protected:

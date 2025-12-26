@@ -4,10 +4,17 @@ using namespace std;
 
 #include "person.h"
 
-Person::Person(const char* name, const int id, Date& birthdate, const eGender gender) : id(id), birthdate(birthdate), gender(gender)
+Person::Person(const char* name, const int id, Date& birthdate, const eGender gender) : id(id), birthdate(birthdate)
 {
+	this->gender = gender;
 	this->name = new char[strlen(name) + 1];
 	strcpy(this->name, name);
+}
+
+Person::Person(const char* name, Date& birthdate) : birthdate(birthdate)
+{
+	id = 0;
+	gender = eGender::MALE;
 }
 
 Person::~Person()

@@ -12,6 +12,8 @@ using namespace std;
 
 #include "hospital.h"
 #include "department.h"
+#include "worker.h"
+#include "date.h"
 
 // main function headers
 void printDepartments(Hospital& hospital);
@@ -33,6 +35,10 @@ void main()
 	printDepartments(hospital);
 	hospital.removeDepartment(b);
 	printDepartments(hospital);
+	Date date;
+	//Person p("nir",date);
+	Person p("nir", 1, date, Person::eGender::MALE);
+	//Worker w("nir",1,date,0);
 }
 
 // common functions (for now)
