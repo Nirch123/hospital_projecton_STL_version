@@ -20,7 +20,6 @@ void printDepartments(Hospital& hospital);
 
 void main()
 {
-	// temp change
 	// hardcoded hospital benchmark
 	Researchcenter researchCenter("Zubi");
 	Hospital hospital("Sheeba",researchCenter);

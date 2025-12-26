@@ -131,13 +131,17 @@
     <ClCompile Include="doctor.cpp" />
     <ClCompile Include="hospital.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="person.cpp" />
+    <ClCompile Include="person.h" />
     <ClCompile Include="researchcenter.cpp" />
+    <ClCompile Include="worker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="department.h" />
     <ClInclude Include="doctor.h" />
     <ClInclude Include="hospital.h" />
     <ClInclude Include="researchcenter.h" />
+    <ClInclude Include="worker.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
