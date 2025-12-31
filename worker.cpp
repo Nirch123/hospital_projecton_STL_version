@@ -13,7 +13,9 @@ Worker::Worker(const char* name, const int id, Date& birthdate, eGender gender, 
 }
 
 Worker::~Worker()
-{}
+{
+	cout << "\nDEBUG: in Worker::~Worker()";
+}
 
 const int Worker::getWorkerId() const { return workerId; }
 

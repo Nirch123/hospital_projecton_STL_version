@@ -46,6 +46,7 @@ void main()
 	printWorkersInDepartment(a);
 	b.removeWorker(&n2);
 	printWorkersInDepartment(b);
+
 }
 
 // common functions (for now)

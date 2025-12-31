@@ -6,7 +6,10 @@ Nurse::Nurse(const char* name, const int id, Date& birthdate, eGender gender, De
 	Worker::setWorkerType(Worker::eWorkerType::NURSE);
 }
 
-Nurse::~Nurse() {}
+Nurse::~Nurse() 
+{
+	cout << "\nDEBUG: in Nurse::~Nurse()";
+}
 
 bool Nurse::setNurseYears(int YoE)
 {
