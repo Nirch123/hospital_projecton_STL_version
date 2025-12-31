@@ -29,8 +29,8 @@ bool Worker::setWorkerDepartment(Department* new_department)
 
 ostream& operator<<(ostream& os, const Worker& worker)
 {
-	os << "Worker Id: " << worker.getWorkerId() << " Name: " << worker.getName()
-		<< " Gender: " << worker.getGender() << " Department: " << worker.department->getName();
+	os << "\tWorker Id: " << worker.getWorkerId() << "\n\tName: " << worker.getName()
+		<< "\n\tGender: " << worker.getGender() << "\n\tDepartment: " << worker.department->getName();
 	worker.nurseOs(os);
 	return os;
 }
