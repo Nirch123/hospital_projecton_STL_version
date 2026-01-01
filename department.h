@@ -6,6 +6,7 @@ using namespace std;
 
 //class Worker;
 #include "worker.h"
+#include "patient.h"
 
 class Department
 {
@@ -15,7 +16,9 @@ class Department
 		Department(const Department& other);
 		~Department();
 		bool addWorker(Worker* worker);
+		bool addPatient(Patient* patient);
 		bool removeWorker(Worker* worker);
+		bool removePatient(Patient* patient);
 		const char* getName() const;
 		const int getWorkersAmount() const;
 		const Worker& getWorkerByIndex(int index) const;
@@ -25,7 +28,8 @@ class Department
 		
 	private:
 		char *name;
-		int physicalWorkers, logicalWorkers;
+		int physicalWorkers, logicalWorkers, physicalPatients, logicalPatients;
+		Patient** patientArr;
 		Worker** workerarr;
 		//eWorkerType workertype;
 };

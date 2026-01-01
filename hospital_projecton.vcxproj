@@ -133,6 +133,7 @@
     <ClCompile Include="hospital.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="nurse.cpp" />
+    <ClCompile Include="patient.cpp" />
     <ClCompile Include="person.cpp" />
     <ClCompile Include="person.h" />
     <ClCompile Include="researchcenter.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="doctor.h" />
     <ClInclude Include="hospital.h" />
     <ClInclude Include="nurse.h" />
+    <ClInclude Include="patient.h" />
     <ClInclude Include="researchcenter.h" />
     <ClInclude Include="worker.h" />
   </ItemGroup>
