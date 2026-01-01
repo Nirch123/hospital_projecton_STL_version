@@ -18,7 +18,6 @@ public:
 	Nurse* getPatientNurse() const;
 	const int getPatientId() const;
 	bool setPatientDepartment(Department* department);
-	bool setDateOfArrival(Date& dateofarrival);
 	friend ostream& operator<<(ostream& os, const Patient& patient);
 
 

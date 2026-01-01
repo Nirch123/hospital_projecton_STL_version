@@ -12,8 +12,6 @@ Patient::Patient(const char* name, const int id, Date& birthdate, eGender gender
 	: Person(name, id, birthdate, gender), PatientId(PatientIdCounter++), MyDoctor(doctor), MyNurse(nurse), dateofarrival(date), VisitPurpose(visitpurpose)
 {
 	setPatientDepartment(department);
-	setDateOfArrival(date);
-
 }
 
 Patient::~Patient() {}
@@ -41,10 +39,4 @@ ostream& operator<<(ostream& os, const Patient& patient)
 	os << "Patient Id: " << patient.getPatientId() << " Name: " << patient.getName()
 		<< " Gender: " << patient.getGender() << " Department: " << patient.department->getName();
 	return os;
-}
-
-bool setDateOfArrival(Date& new_dateofarrival)
-{
-	//this->dateofarrival = new_dateofarrival;
-
 }
