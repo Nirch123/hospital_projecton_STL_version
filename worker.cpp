@@ -7,7 +7,7 @@ using namespace std;
 
 int Worker::idCounter = 100;
 
-Worker::Worker(const char* name, const int id, Date& birthdate, eGender gender, Department* department) : Person(name, id, birthdate, gender), workerId(++idCounter)
+Worker::Worker(const char* name, const int id, const Date& birthdate, eGender gender, Department* department) : Person(name, id, birthdate, gender), workerId(++idCounter)
 {
 	setWorkerDepartment(department);
 }

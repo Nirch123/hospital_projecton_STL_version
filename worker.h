@@ -8,7 +8,7 @@ class Worker : public Person
 {
 public:
 	enum eWorkerType { DOCTOR, NURSE, OTHER }; // should classification be under department? or under worker?
-	Worker(const char* name, const int id, Date& birthdate, eGender gender, Department* department = nullptr);
+	Worker(const char* name, const int id, const Date& birthdate, eGender gender, Department* department = nullptr);
 	virtual ~Worker();
 	const int getWorkerId() const;
 	const char* getWorkerDepartment() const;

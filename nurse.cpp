@@ -1,6 +1,6 @@
 #include "nurse.h"
 
-Nurse::Nurse(const char* name, const int id, Date& birthdate, eGender gender, Department* department, int YoE) : Worker(name, id, birthdate, gender, department)
+Nurse::Nurse(const char* name, const int id, const Date& birthdate, eGender gender, Department* department, int YoE) : Worker(name, id, birthdate, gender, department)
 {
 	this->YoE = YoE;
 	Worker::setWorkerType(Worker::eWorkerType::NURSE);
