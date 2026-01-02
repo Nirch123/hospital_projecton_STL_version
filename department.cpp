@@ -11,15 +11,20 @@ Department::Department(const char* name)
 	physicalWorkers = 0;
 	logicalWorkers = 1;
 	workerarr = new Worker * [logicalWorkers] {nullptr};
+	physicalPatients = 0;
+	logicalPatients = 1;
+	patientArr = new Patient * [logicalPatients] {nullptr};
 }
 
 Department::Department(const Department& other) : physicalWorkers(other.physicalWorkers) , 
-logicalWorkers(other.logicalWorkers)
+logicalWorkers(other.logicalWorkers), physicalPatients(other.physicalPatients), logicalPatients(other.logicalPatients)
 {
 	this->name = new char[strlen(other.name) + 1];
 	strcpy(name, other.name);
 	for (int i = 0; i < physicalWorkers; i++)
 		other.workerarr[i] = workerarr[i];
+	for (int i = 0; i < physicalPatients; i++)
+		other.patientArr[i] = patientArr[i];
 }
 
 Department::~Department() 
@@ -51,6 +56,29 @@ bool Department::addWorker(Worker* worker)
 	return true;
 }
 
+bool Department::addPatient(Patient* patient)
+{
+	for (int i = 0; i < physicalPatients; i++)  
+		if (patient->getId() == patientArr[i]->getId())
+			return false;
+
+	if (patientArr[logicalPatients - 1] != nullptr) 
+	{
+		logicalPatients = logicalPatients * 2;
+		Patient** temp = new Patient * [logicalPatients];
+		for (int i = 0; i < physicalPatients; i++)
+			temp[i] = patientArr[i];
+		delete[] patientArr;
+		patientArr = temp;
+	}
+
+	patientArr[physicalPatients] = patient;
+	if (patient->getPatientDepartment() != patientArr[physicalPatients]->getPatientDepartment())
+		patient->setPatientDepartment(this); 
+	physicalPatients++;
+	return true;
+}
+
 bool Department::removeWorker(Worker* worker)
 {
 	for (int i = 0; i < physicalWorkers; i++)  // check if worker id is in department already
@@ -68,6 +96,24 @@ bool Department::removeWorker(Worker* worker)
 			return true; // worker was found and removed from department
 		}
 		return false; // worker was not found
+}
+
+bool Department::removePatient(Patient* patient)
+{
+	for (int i = 0; i < physicalPatients; i++) 
+		if (patient->getId() == patientArr[i]->getId())
+		{
+			patientArr[i]->setPatientDepartment(nullptr);
+			int j = i;
+			do
+			{
+				patientArr[j] = patientArr[j + 1];
+				++j;
+			} while (j < physicalPatients);
+			--physicalPatients;
+			return true; 
+		}
+	return false;
 }
 
 const char* Department::getName() const { return name; }
