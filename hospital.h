@@ -17,8 +17,11 @@ public:
 	const char* getDepartmentName(int num) const;
 	const int getDepartmentsCount() const;
 	const char* getResearchCenterName() const;
+	const Department* getDepartmentByName(const char* dName) const;
 	bool addDepartment(Department& department);
-	bool removeDepartment(Department& department);
+	bool removeDepartment(const Department& department);
+	bool printDepartments();
+	bool printWorkersInDepartment(Department& department);
 	friend ostream& operator<<(ostream& os, const Hospital& hospital);
 
 private:
