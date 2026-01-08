@@ -45,6 +45,15 @@
     <ClCompile Include="nurse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="patient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Article.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="researcher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="doctor.h">
@@ -66,6 +75,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="nurse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="patient.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Article.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="researcher.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

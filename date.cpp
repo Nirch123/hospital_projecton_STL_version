@@ -1,6 +1,5 @@
 #include <iostream>
 using namespace std;
-
 #include "date.h"
 
 Date::Date()
@@ -12,10 +11,10 @@ Date::Date()
 Date::Date(int d, int m, int y)
 {
 	if (d > 31 || d < 1 || m>12 || m < 1 || y < 1900)
-		{
+	{
 		day = month = 1;
 		year = 1900;
-		}
+	}
 	else
 	{
 		day = d;
@@ -24,22 +23,23 @@ Date::Date(int d, int m, int y)
 	}
 }
 
-Date::Date(Date& other)
+// Change: Added const
+Date::Date(const Date& other)
 {
 	setDate(other.day, other.month, other.year);
 }
 
-void Date::show() const 
+void Date::show() const
 {
 	cout << day << "/" << month << "/" << year << endl;
 }
 
 ostream& operator<< (ostream& os, const Date& date)
 {
-	os << date.day << "/" << date.month << "/" << date.year << "\n";
+	// Change: Removed "\n" to allow inline printing in other classes
+	os << date.day << "/" << date.month << "/" << date.year;
 	return os;
 }
-
 
 const int Date::getDate() const { return day, month, year; }
 
@@ -49,4 +49,3 @@ void Date::setDate(int d, int m, int y)
 	month = m;
 	year = y;
 }
-

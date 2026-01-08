@@ -3,25 +3,32 @@
 
 using namespace std;
 #include <iostream>
-//#include "researcher.h"
-
+#include "researcher.h" 
 
 class Researchcenter
 {
 public:
 	Researchcenter(const char* name);
 	~Researchcenter();
+
 	const char* getName() const;
-	const int getNumOfResearchers() const;
-	//bool removeResearcher(const char* researcherName);
-	//bool addReasearcher(Researcher* r);
-	//void printResearchcenter() const;
+
+	bool addResearcher(Researcher* r);
+
+	bool addArticleToResearcher(int researcherId, const Article& article);
+
+	const Researcher* getResearcherById(int id) const;
+
+	void printAllResearchers() const;
+
 	friend ostream& operator<<(ostream& os, const Researchcenter& researchcenter);
 
 private:
 	char* name;
-	int  NumOfResearchers;
-	//esearcher allResearchers**;
+
+	Researcher** allResearchers;
+	int physicalResearchers;
+	int logicalResearchers;
 };
 
 #endif

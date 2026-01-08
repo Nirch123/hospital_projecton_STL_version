@@ -9,11 +9,11 @@ class Date
 public:
 	Date();
 	Date(int d, int m, int y);
-	Date(Date& other);
+	Date(const Date& other);
 
 	void show() const;
 	const int getDate() const;
-	void setDate(int d,int m,int y);
+	void setDate(int d, int m, int y);
 	friend ostream& operator<< (ostream& os, const Date& date);
 
 private:

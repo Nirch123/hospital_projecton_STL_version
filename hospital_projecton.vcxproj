@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Article.cpp" />
     <ClCompile Include="date.cpp" />
     <ClCompile Include="department.cpp" />
     <ClCompile Include="doctor.cpp" />
@@ -137,9 +138,11 @@
     <ClCompile Include="person.cpp" />
     <ClCompile Include="person.h" />
     <ClCompile Include="researchcenter.cpp" />
+    <ClCompile Include="researcher.cpp" />
     <ClCompile Include="worker.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Article.h" />
     <ClInclude Include="date.h" />
     <ClInclude Include="department.h" />
     <ClInclude Include="doctor.h" />
@@ -147,6 +150,7 @@
     <ClInclude Include="nurse.h" />
     <ClInclude Include="patient.h" />
     <ClInclude Include="researchcenter.h" />
+    <ClInclude Include="researcher.h" />
     <ClInclude Include="worker.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -21,6 +21,9 @@ void InsertPatientVisitFunc(Hospital &h);
 void ShowDeparmentInfoFunc(Hospital &h);
 void ShowMedicalStaffFunc(Hospital& h);
 void SearchPatientIDFunc(Hospital& h);
+void AddResearcherFunc(Hospital& h, Researchcenter& rc);
+void AddPaperFunc(Researchcenter& rc, Hospital& h);
+void ShowResearchCenterInfoFunc(Researchcenter& rc);
 
 
 
@@ -49,7 +52,8 @@ void main()
 			"\n(8)\tShow department information (workers/patients)" <<
 			"\n(9)\tShow all medical staff" <<
 			"\n(10)\tSearch patient by ID" <<
-			"\n(11)\tExit" <<
+			"\n(11)\tShow all research center staff" <<
+			"\n(12)\tExit" <<
 			"\nUser Input: ";
 		cin >> select;
 		switch (select)
@@ -79,10 +83,10 @@ void main()
 			InsertPatientVisitFunc(*h);
 			break;
 		case 6:
-			//AddResearcherFunc();
+			AddResearcherFunc(*h, *rc);
 			break;
 		case 7:
-			//AddPaperFunc();
+			AddPaperFunc(*rc, *h);
 			break;
 		case 8:
 			ShowDeparmentInfoFunc(*h);
@@ -94,6 +98,9 @@ void main()
 			SearchPatientIDFunc(*h);
 			break;
 		case 11:
+			ShowResearchCenterInfoFunc(*rc);
+			break;
+		case 12:
 			break;
 		default:
 			cout << "\nInvalid input, try again\n";
@@ -337,6 +344,76 @@ void SearchPatientIDFunc(Hospital& h)
 		}
 	}
 	cout << "\nPatient was not found!\n";
+
+}
+void AddResearcherFunc(Hospital& h, Researchcenter& rc)
+{
+	char name[20];
+	int id, day, month, year, genderInt, isDocInt;
+	Person::eGender gender;
+	bool isDoctor;
+
+	cout << "\nInput Researcher information:";
+	cout << "\nName: "; cin >> name;
+	cout << "\nId: "; cin >> id;
+
+	cout << "Gender: (0) Male (1) Female (2) Other: ";
+	cin >> genderInt;
+	switch (genderInt)
+	{
+	case 0: gender = Person::MALE; break;
+	case 1: gender = Person::FEMALE; break;
+	default: gender = Person::OTHER; break;
+	}
+
+	cout << "\nDay of birth: "; cin >> day;
+	cout << "\nMonth of birth: "; cin >> month;
+	cout << "\nYear of birth: "; cin >> year;
+	cout << "\nIs this researcher also a doctor? (1 for Yes, 0 for No): ";
+
+	cin >> isDocInt;
+	isDoctor = (isDocInt == 1);
+
+	Researcher* newR = new Researcher(name, id, h.createDate(day, month, year), gender, isDoctor);
+
+	rc.addResearcher(newR);
+
+	cout << "\nResearcher added successfully!\n";
+}
+void AddPaperFunc(Researchcenter& rc, Hospital& h)
+{
+	int id, day, month, year;
+	char articleName[50], magazineName[50];
+
+	cout << "\nEnter Researcher ID to add article to: ";
+	cin >> id;
+
+	if (rc.getResearcherById(id) == nullptr)
+	{
+		cout << "\nERROR: Researcher not found inside the Research Center!\n";
+		return;
+	}
+
+	cout << "\nArticle Name: "; cin >> articleName;
+	cout << "\nMagazine Name: "; cin >> magazineName;
+	cout << "\nPublication Date (D M Y): ";
+	cin >> day >> month >> year;
+
+	Article newArticle(articleName, magazineName, h.createDate(day, month, year));
+
+	if (rc.addArticleToResearcher(id, newArticle))
+		cout << "\nArticle added successfully!\n";
+	else
+		cout << "\nFailed to add article.\n";
+}
+
+void ShowResearchCenterInfoFunc(Researchcenter& rc)
+{
+	
+	cout << "\n   Research Center Information System   ";
+	
+	rc.printAllResearchers();
+	
 }
 
 
