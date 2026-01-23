@@ -159,7 +159,7 @@ void RemoveDepartmentFunc(Hospital& h)
 
 void AddDoctorFunc(Hospital& h)
 {
-	char name[20], expertise[20], department[20];
+	/*char name[20], expertise[20], department[20];
 	int id, day, month, year, genderInt, IsSurgeon, NumOfSurgeries;
 	Person::eGender gender;
 	
@@ -205,12 +205,14 @@ void AddDoctorFunc(Hospital& h)
 	{
 		Doctor temp(name, id, h.createDate(day, month, year), expertise, gender, h.getDepartmentByName(department));
 		h += temp;
-	}
+	}*/
 	
 	// HARDCODED BENCHTEST
-	//Date tempD(7, 6, 2000);
-	//Doctor temp("Nir", 1234 , tempD, "help", Person::MALE, h.getDepartmentByName("children"));
-
+	Date tempD(7, 6, 2000);
+	Doctor temp("Nir", 1234 , tempD, "help", Person::MALE, h.getDepartmentByName("children"));
+	h += temp;
+	Surgeon temp2("ritz", 12345, tempD, "helpo", Person::MALE, h.getDepartmentByName("children"), 5);
+	h += temp2;
 } 
 
 void AddNurseFunc(Hospital& h)

@@ -4,12 +4,12 @@
 Surgeon::Surgeon(const char* name, const int id, const Date& birthdate, const char* expertise,
 	eGender gender, Department* department, int NumOfSurgeries) : Doctor(name, id, birthdate, expertise, gender, department)
 {
-
+	setSurgeonNumOfSurgeries(NumOfSurgeries);
 }
 
 Surgeon::Surgeon(Surgeon& other) : Doctor(other)
 {
-
+	NumOfSurgeries = other.NumOfSurgeries;
 }
 
 Surgeon::~Surgeon()
