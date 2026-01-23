@@ -27,7 +27,6 @@ class Department
 		const int getPatientsAmount() const;
 		const Worker& getWorkerByIndex(int index) const;
 		const Patient& getPatientByIndex(int index) const;
-		//const eWorkerType getWorkerType(Worker* worker) const;
 		friend ostream& operator<<(ostream& os, const Department& department);
 		const bool doesPatientExist(const Patient* patient);
 		friend class Hospital;
@@ -37,6 +36,5 @@ class Department
 		int physicalWorkers, logicalWorkers, physicalPatients, logicalPatients;
 		Patient** patientArr;
 		Worker** workerarr;
-		//eWorkerType workertype;
 };
 #endif

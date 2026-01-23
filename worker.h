@@ -32,10 +32,6 @@ protected:
 	int workerId;
 	Department* department;
 	eWorkerType workertype;
-
-
-//private:
-	//static int idCounter;
 };
 
 

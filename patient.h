@@ -35,10 +35,6 @@ public:
 	friend class Hospital;
 
 protected:
-	//const Date dateofarrival;
-	//Department* department;
-	//Doctor* MyDoctor;
-	//Nurse* MyNurse;
 	Visit** visits;
 	int PatientId, physicalVisits, logicalVisits;
 

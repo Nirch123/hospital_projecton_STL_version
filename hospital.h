@@ -39,7 +39,6 @@ public:
 	bool addPatient(const char* name, int id, const Date& birthdate, Person::eGender gender,
 		const Date& dateofarrival, Department* department, Doctor* doctor = nullptr, Nurse* nurse = nullptr);
 	Date& createDate(int day, int month, int year);
-	//bool printPatientsInDepartment(Department& department);
 	friend ostream& operator<<(ostream& os, const Hospital& hospital);
 	bool updatePatientInformation(Patient* p,  Department* department = nullptr, Doctor* doctor = nullptr, Nurse* nurse = nullptr);
 	Researchcenter* getResearchCenter();

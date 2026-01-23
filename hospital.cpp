@@ -257,16 +257,6 @@ Nurse* Hospital::getNurseById(int id)
 		if (staff[i]->getWorkerId() == id)
 			return dynamic_cast<Nurse*>(staff[i]);
 	}
-	/*if (physicalDepartments == 0)
-		return nullptr; // no departments yet
-	for (int i = 0; i < physicalDepartments; i++)
-	{
-		for (int j = 0; j < departments[i]->physicalWorkers; j++)
-		{
-			if (id == (departments[i]->workerarr[j]->getWorkerId()))
-				return dynamic_cast<Nurse*>(departments[i]->workerarr[j]); // nurse found
-		}
-	}*/
 	return nullptr; // nurse not found
 }
 
@@ -279,16 +269,6 @@ Doctor* Hospital::getDoctorById(int id)
 		if (staff[i]->getWorkerId() == id)
 			return dynamic_cast<Doctor*>(staff[i]);
 	}
-	/*if (physicalDepartments == 0)
-		return nullptr; // no departments yet
-	for (int i = 0; i < physicalDepartments; i++)
-	{
-		for (int j = 0; j < departments[i]->physicalWorkers; j++)
-		{
-			if (id == (departments[i]->workerarr[j]->getWorkerId()))
-				return dynamic_cast<Doctor*>(departments[i]->workerarr[j]); // doctor found
-		}
-	}*/
 	return nullptr; // doctor not found
 }
 
@@ -324,11 +304,6 @@ const char* Hospital::getPatientNameById(int id)
 			return patients[i]->getName();
 	}
 	return "Patient ID was not found";
-	/*Patient* temp = getPatientById(id);
-	if (temp != nullptr)
-		return temp->getName();
-	else
-		return "ERROR";*/
 }
 
 Researchcenter* Hospital::getResearchCenter()

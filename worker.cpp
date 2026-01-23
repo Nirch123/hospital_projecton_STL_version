@@ -5,8 +5,6 @@
 #include "department.h"
 #include "doctor.h"
 
-//int Worker::idCounter = 100;
-
 Worker::Worker(const char* name, const int id, const Date& birthdate, eGender gender, Department* department) 
 	: Person(name, id, birthdate, gender)
 {

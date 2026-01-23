@@ -77,8 +77,6 @@ bool Patient::setPatientDepartment(Department* new_department)
 	visits[physicalVisits]->setPatientDepartment(new_department);
 	if (new_department->doesPatientExist(this) == false)
 		new_department->addPatient(this);
-	//if (visits[physicalVisits]->getPatientDepartment() != nullptr)
-		//visits[physicalVisits]->getPatientDepartment().addPatient(this);
 	return true;
 }
 

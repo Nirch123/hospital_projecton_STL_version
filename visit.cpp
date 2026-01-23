@@ -46,8 +46,6 @@ bool Visit::setPatientDepartment(Department* new_department)
 		return true;
 	if (new_department->doesPatientExist(patient) == false)
 		new_department->addPatient(patient);
-	//if (department != nullptr)
-		//department->addPatient(patient);
 	return true;
 }
 

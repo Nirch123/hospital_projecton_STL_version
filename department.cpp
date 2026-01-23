@@ -67,8 +67,6 @@ bool Department::addPatient(Patient* patient)
 	}
 
 	patientArr[physicalPatients] = patient;
-	//if (strcmp(patient->getPatientDepartment(),patientArr[physicalPatients]->getPatientDepartment()))
-		//patient->setPatientDepartment(this); 
 	physicalPatients++;
 	return true;
 }
