@@ -23,7 +23,7 @@ class Department
 		bool addPatient(Patient* patient);
 		bool removeWorker(Worker* worker);
 		bool removePatient(Patient* patient);
-		const string& getName() const;
+		const string getName() const;
 		const int getWorkersAmount() const;
 		const int getPatientsAmount() const;
 		const Worker& getWorkerByIndex(int index) const;

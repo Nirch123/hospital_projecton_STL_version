@@ -213,9 +213,9 @@ void AddDoctorFunc(Hospital& h)
 	// HARDCODED BENCHTEST
 	
 	Date tempD(7, 6, 2000);
-	Doctor temp("Nir", 1234 , tempD, "help", Person::MALE, h.getDepartmentByName("children"));
+	Doctor temp("Nir", 1234 , tempD, "first-aid", Person::MALE, h.getDepartmentByName("children"));
 	h += temp;
-	Surgeon temp2("Ritz", 4321, tempD, "help", Person::MALE, h.getDepartmentByName("emergency"), 500);
+	Surgeon temp2("Ritz", 4321, tempD, "brain", Person::MALE, h.getDepartmentByName("emergency"), 500);
 	h += temp2;
 	
 } 
@@ -270,151 +270,152 @@ void AddNurseFunc(Hospital& h)
 
 void InsertPatientVisitFunc(Hospital& h)
 {
-	//char name[20], department[20], checkName[20];
-	//int id, genderInt, day, month, year, visitD, visitM, visitY,
-	//	docId, nurseId, reason, opRoom;
-	//bool isFast;
-	//Person::eGender gender;
-	//cout << "\nPatient visit system";
-	//if (h.getDepartmentsCount() == 0)
-	//{
-	//	cout << "\nERROR: No departments exist!\n";
-	//	return;
-	//}
-	//cout << "\nInsert patient ID: ";
-	//cin >> id;
-	//if (h.getPatientById(id) == nullptr) // new patient
-	//{
-	//	cout << "\nNew patient, creating visit card:";
-	//	cout << "\nInput patient information\nName: ";
-	//	cin >> name;
-	//	cout << "Gender: (0) Male (1) Female (2) Other: ";
-	//	cin >> genderInt;
-	//	switch (genderInt)
-	//	{
-	//	case 0:
-	//		gender = Person::MALE;
-	//		break;
-	//	case 1:
-	//		gender = Person::FEMALE;
-	//		break;
-	//	default:
-	//		gender = Person::OTHER;
-	//		break;
-	//	}
-	//	cout << "\nDay of birth: ";
-	//	cin >> day;
-	//	cout << "\nMonth of birth: ";
-	//	cin >> month;
-	//	cout << "\nYear of birth: ";
-	//	cin >> year;
-	//	cout << "\nDate of arrival:\nDay: ";
-	//	cin >> visitD;
-	//	cout << "\nMonth: ";
-	//	cin >> visitM;
-	//	cout << "\nYear: ";
-	//	cin >> visitY;
-	//	cout << "\nReason of visit:\n(1) Check\n(2) Surgery";
-	//	cin >> reason;
-	//	if (reason == 1)
-	//	{
-	//		cout << "\nCheck name: ";
-	//		cin >> checkName;
-	//	}
-	//	else
-	//	{
-	//		cout << "\nIs the patient fasting? (1) Yes, (0) No: ";
-	//		cin >> isFast;
-	//		cout << "\nSurgery/Opeartion room number: #";
-	//		cin >> opRoom;
-	//	}
-	//	cout << "\nDepartment: ";
-	//	cin >> department;
-	//	cout << "\nAssigned doctor worker ID: ";
-	//	cin >> docId;
-	//	cout << "\nAssigned nurse worker ID: ";
-	//	cin >> nurseId;
-	//	h.addPatient(name, id, h.createDate(day, month, year), gender, 
-	//		h.createDate(visitD, visitM, visitY), 
-	//		h.getDepartmentByName(department), 
-	//		h.getDoctorById(docId),
-	//		h.getNurseById(nurseId));
-	//	if (reason == 1)
-	//		h.getPatientById(id)->CreateCheckVisit(h.getPatientById(id),
-	//			h.createDate(visitD, visitM, visitY),
-	//			h.getDepartmentByName(department),
-	//			checkName,
-	//			h.getDoctorById(docId),
-	//			h.getNurseById(nurseId));
-	//	else
-	//		h.getPatientById(id)->CreateSurgeryVisit(h.getPatientById(id),
-	//			h.createDate(visitD, visitM, visitY),
-	//			h.getDepartmentByName(department),
-	//			isFast, opRoom,
-	//			h.getDoctorById(docId),
-	//			h.getNurseById(nurseId));
-	//}
-	//else // existing patient
-	//{
-	//	cout << "\nPatient found in system! Update patient information? (Y/N): ";
-	//	cin >> name;
-	//	if (strcmp(name, "Y") == 0)
-	//	{
-	//		cout << "\nDepartment: ";
-	//		cin >> department;
-	//		cout << "\nAssigned doctor worker ID: ";
-	//		cin >> docId;
-	//		cout << "\nAssigned nurse worker ID: ";
-	//		cin >> nurseId;
-	//		h.updatePatientInformation(h.getPatientById(id), h.getDepartmentByName(department), h.getDoctorById(docId), h.getNurseById(nurseId));
-	//	}
-	//	else
-	//	{
-	//		cout << "\nCreating new visit:";
-	//		cout << "\nDate of arrival:\nDay: ";
-	//		cin >> visitD;
-	//		cout << "\nMonth: ";
-	//		cin >> visitM;
-	//		cout << "\nYear: ";
-	//		cin >> visitY;
-	//		cout << "\nReason of visit:\n(1) Check\n(2) Surgery";
-	//		cin >> reason;
-	//		if (reason == 1)
-	//		{
-	//			cout << "\nCheck name: ";
-	//			cin >> checkName;
-	//		}
-	//		else
-	//		{
-	//			cout << "\nIs the patient fasting? (1) Yes, (0) No: ";
-	//			cin >> isFast;
-	//			cout << "\nSurgery/Opeartion room number: #";
-	//			cin >> opRoom;
-	//		}
-	//		cout << "\nDepartment: ";
-	//		cin >> department;
-	//		cout << "\nAssigned doctor worker ID: ";
-	//		cin >> docId;
-	//		cout << "\nAssigned nurse worker ID: ";
-	//		cin >> nurseId;
-	//		if (reason == 1)
-	//			h.getPatientById(id)->CreateCheckVisit(h.getPatientById(id),
-	//				h.createDate(visitD, visitM, visitY),
-	//				h.getDepartmentByName(department),
-	//				checkName,
-	//				h.getDoctorById(docId),
-	//				h.getNurseById(nurseId));
-	//		else
-	//			h.getPatientById(id)->CreateSurgeryVisit(h.getPatientById(id),
-	//				h.createDate(visitD, visitM, visitY),
-	//				h.getDepartmentByName(department),
-	//				isFast, opRoom,
-	//				h.getDoctorById(docId),
-	//				h.getNurseById(nurseId));
-	//	}
-	//}
+	char name[20], department[20], checkName[20];
+	int id, genderInt, day, month, year, visitD, visitM, visitY,
+		docId, nurseId, reason, opRoom;
+	bool isFast;
+	Person::eGender gender;
+	cout << "\nPatient visit system";
+	if (h.getDepartmentsCount() == 0)
+	{
+		cout << "\nERROR: No departments exist!\n";
+		return;
+	}
+	cout << "\nInsert patient ID: ";
+	cin >> id;
+	if (h.getPatientById(id) == nullptr) // new patient
+	{
+		cout << "\nNew patient, creating visit card:";
+		cout << "\nInput patient information\nName: ";
+		cin >> name;
+		cout << "Gender: (0) Male (1) Female (2) Other: ";
+		cin >> genderInt;
+		switch (genderInt)
+		{
+		case 0:
+			gender = Person::MALE;
+			break;
+		case 1:
+			gender = Person::FEMALE;
+			break;
+		default:
+			gender = Person::OTHER;
+			break;
+		}
+		cout << "\nDay of birth: ";
+		cin >> day;
+		cout << "\nMonth of birth: ";
+		cin >> month;
+		cout << "\nYear of birth: ";
+		cin >> year;
+		cout << "\nDate of arrival:\nDay: ";
+		cin >> visitD;
+		cout << "\nMonth: ";
+		cin >> visitM;
+		cout << "\nYear: ";
+		cin >> visitY;
+		cout << "\nReason of visit:\n(1) Check\n(2) Surgery\n";
+		cin >> reason;
+		if (reason == 1)
+		{
+			cout << "\nCheck name: ";
+			cin >> checkName;
+		}
+		else
+		{
+			cout << "\nIs the patient fasting? (1) Yes, (0) No: ";
+			cin >> isFast;
+			cout << "\nSurgery/Opeartion room number: #";
+			cin >> opRoom;
+		}
+		cout << "\nDepartment: ";
+		cin >> department;
+		cout << "\nAssigned doctor worker ID: ";
+		cin >> docId;
+		cout << "\nAssigned nurse worker ID: ";
+		cin >> nurseId;
+		h.addPatient(name, id, h.createDate(day, month, year), gender, 
+			h.createDate(visitD, visitM, visitY), 
+			h.getDepartmentByName(department), 
+			h.getDoctorById(docId),
+			h.getNurseById(nurseId));
+		if (reason == 1)
+			h.getPatientById(id)->CreateCheckVisit(h.getPatientById(id),
+				h.createDate(visitD, visitM, visitY),
+				h.getDepartmentByName(department),
+				checkName,
+				h.getDoctorById(docId),
+				h.getNurseById(nurseId));
+		else
+			h.getPatientById(id)->CreateSurgeryVisit(h.getPatientById(id),
+				h.createDate(visitD, visitM, visitY),
+				h.getDepartmentByName(department),
+				isFast, opRoom,
+				h.getDoctorById(docId),
+				h.getNurseById(nurseId));
+	}
+	else // existing patient
+	{
+		cout << "\nPatient found in system! Update patient information? (Y/N): ";
+		cin >> name;
+		if (strcmp(name, "Y") == 0)
+		{
+			cout << "\nDepartment: ";
+			cin >> department;
+			cout << "\nAssigned doctor worker ID: ";
+			cin >> docId;
+			cout << "\nAssigned nurse worker ID: ";
+			cin >> nurseId;
+			h.updatePatientInformation(h.getPatientById(id), h.getDepartmentByName(department), h.getDoctorById(docId), h.getNurseById(nurseId));
+		}
+		else
+		{
+			cout << "\nCreating new visit:";
+			cout << "\nDate of arrival:\nDay: ";
+			cin >> visitD;
+			cout << "\nMonth: ";
+			cin >> visitM;
+			cout << "\nYear: ";
+			cin >> visitY;
+			cout << "\nReason of visit:\n(1) Check\n(2) Surgery";
+			cin >> reason;
+			if (reason == 1)
+			{
+				cout << "\nCheck name: ";
+				cin >> checkName;
+			}
+			else
+			{
+				cout << "\nIs the patient fasting? (1) Yes, (0) No: ";
+				cin >> isFast;
+				cout << "\nSurgery/Opeartion room number: #";
+				cin >> opRoom;
+			}
+			cout << "\nDepartment: ";
+			cin >> department;
+			cout << "\nAssigned doctor worker ID: ";
+			cin >> docId;
+			cout << "\nAssigned nurse worker ID: ";
+			cin >> nurseId;
+			if (reason == 1)
+				h.getPatientById(id)->CreateCheckVisit(h.getPatientById(id),
+					h.createDate(visitD, visitM, visitY),
+					h.getDepartmentByName(department),
+					checkName,
+					h.getDoctorById(docId),
+					h.getNurseById(nurseId));
+			else
+				h.getPatientById(id)->CreateSurgeryVisit(h.getPatientById(id),
+					h.createDate(visitD, visitM, visitY),
+					h.getDepartmentByName(department),
+					isFast, opRoom,
+					h.getDoctorById(docId),
+					h.getNurseById(nurseId));
+		}
+	}
 	
 	//HARDCODED BENCHTEST
+	/*
 	h.addPatient("Arik", 1010, h.createDate(0, 0, 0), Person::OTHER, h.createDate(19, 01, 2026), h.getDepartmentByIndex(0));
 	h.getPatientById(1010)->CreateCheckVisit(h.getPatientById(1010),
 		h.createDate(7, 6, 2026),
@@ -428,9 +429,9 @@ void InsertPatientVisitFunc(Hospital& h)
 		h.createDate(8, 2, 2025),
 		h.getDepartmentByName("emergency"),
 		true, 201,
-		h.getDoctorById(103),
-		h.getNurseById(0));
-	
+		h.getDoctorById(500),
+		h.getNurseById(500));
+	*/
 }
 
 void ShowDeparmentInfoFunc(Hospital& h)
@@ -513,7 +514,7 @@ void SearchPatientIDFunc(Hospital& h)
 	{
 		if (h.getPatientById(id) != nullptr)
 		{
-			cout << "\nPatient found in department: " << h.getDepartmentName(i)
+			cout << "\nPatient found in department: " << h.getPatientById(id)->getPatientDepartment()
 				<< "\nPatient name: " << h.getPatientNameById(id) << "\n";
 			return;
 		}

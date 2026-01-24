@@ -116,8 +116,14 @@ ostream& operator<<(ostream& os, const Patient& patient)
 		os << "\n\tDepartment: " << patient.getPatientDepartment() <<
 			"\n\tDOA: " << patient.getDateOfArrival() <<
 			"\n\tVisit reason: " << patient.getPatientVisitPurpose();
-			//<< "\n\tAssigned Doctor: " << *patient.getPatientDoctor() <<
-			//"\n\tAssigned Nurse: " << *patient.getPatientNurse();
+		if (patient.getPatientDoctor() != NULL)
+			os << "\n\tAssigned Doctor: Dr." << patient.getPatientDoctor()->getName();
+		else
+			os << "\n\tNo Assigned Doctor";
+		if (patient.getPatientNurse() != NULL)
+			os << "\n\tAssigned Nurse: " << patient.getPatientNurse()->getName();
+		else
+			os << "\n\tNo Assigned Nurse";
 	}
 	else
 	{

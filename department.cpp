@@ -106,7 +106,7 @@ bool Department::removePatient(Patient* patient)
 	return false;
 }
 
-const string& Department::getName() const 
+const string Department::getName() const 
 {
 	if (this == nullptr)
 		return "NONE";

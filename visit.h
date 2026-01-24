@@ -22,8 +22,8 @@ public:
 	Visit(Patient* patient,const Date& date, Department* department,
 		bool isFast, int opRoom ,Doctor* doctor = nullptr, Nurse* nurse = nullptr);
 	//~Visit();
-	const string& getPatientDepartment() const;
-	const string& getPatientVisitPurpose() const;
+	const string getPatientDepartment() const;
+	const string getPatientVisitPurpose() const;
 	const Date& getDateOfArrival() const;
 	Doctor* getPatientDoctor() const;
 	Nurse* getPatientNurse() const;

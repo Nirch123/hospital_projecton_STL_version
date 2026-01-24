@@ -31,6 +31,14 @@ const string& Person::getName() const
 
 const int Person::getId() const { return id; }
 
-const int Person::getGender() const { return gender; }
+const string Person::getGender() const // because of returning of local variables, we have to copy the string here (not by reference)
+{ 
+	if (gender == MALE)
+		return "Male";
+	else if (gender == FEMALE)
+		return "Female";
+	else
+		return "Other";
+}
 
 const Date& Person::getBirthDate() const { return birthdate; }

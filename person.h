@@ -19,7 +19,7 @@ public:
 
 	const string& getName() const; 
 	const int getId() const;
-	const int getGender() const;
+	const string getGender() const;
 	const Date& getBirthDate() const;
 
 protected:

@@ -22,13 +22,13 @@ Visit::Visit(Patient* patient,const Date& date, Department* department,
 	visitType = SURGERY;
 }
 
-const string& Visit::getPatientDepartment() const { return department->getName(); }
+const string Visit::getPatientDepartment() const { return department->getName(); }
 
 Doctor* Visit::getPatientDoctor() const { return doctor; }
 
 Nurse* Visit::getPatientNurse() const { return nurse; }
 
-const string& Visit::getPatientVisitPurpose() const // for printing
+const string Visit::getPatientVisitPurpose() const // for printing local value, has to return copy, not reference!
 { 
 	if (visitType == CHECK)
 		return "Check";
