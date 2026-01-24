@@ -1,41 +1,32 @@
 #pragma warning (disable: 4996)
 #include <iostream>
-using namespace std;
-
+#include <string>
 #include "person.h"
 
-Person::Person(const char* name, const int id,const Date& birthdate, const eGender gender) : id(id), birthdate(birthdate)
+using namespace std;
+
+Person::Person(const string& name, int id, const Date& birthdate, eGender gender)
+	: name(name), id(id), birthdate(birthdate), gender(gender)
 {
-	this->gender = gender;
-	this->name = new char[strlen(name) + 1];
-	strcpy(this->name, name);
 }
 
-Person::Person(const char* name, Date& birthdate) : birthdate(birthdate)
+Person::Person(const string& name, Date& birthdate)
+	: name(name), birthdate(birthdate), id(0), gender(MALE)
 {
-	id = 0;
-	gender = eGender::MALE;
 }
 
-Person::Person(Person& other) : id(other.id), birthdate(other.birthdate)
+Person::Person(const Person& other)
+	: name(other.name), id(other.id), birthdate(other.birthdate), gender(other.gender)
 {
-	gender = other.gender;
-	name = new char[strlen(other.name) + 1];
-	strcpy(name, other.name);
 }
 
 Person::~Person()
 {
-	cout << "\nDEBUG: in Person::~Person()";
-	delete[] name;
 }
 
-const char* Person::getName() const 
-{ 
-	if (this == nullptr)
-		return "NULL";
-	else
-		return name; 
+const string& Person::getName() const
+{
+	return name;
 }
 
 const int Person::getId() const { return id; }

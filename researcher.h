@@ -1,29 +1,29 @@
 #ifndef __RESEARCHER_H
 #define __RESEARCHER_H
 
-#include "worker.h"
+#include "person.h" 
 #include "article.h"
+#include <vector>
+#include <string>
 
-class Researcher : public Worker
+class Researcher : public Person
 {
 public:
-	Researcher(const char* name, const int id, const Date& birthdate, eGender gender, bool isDoctor);
+	Researcher(const string& name, const int id, const Date& birthdate, eGender gender, bool isDoctor);
+
 	Researcher(const Researcher& other);
-	virtual ~Researcher();
 
 	bool addArticle(const Article& article);
 	bool getIsDoctor() const;
 	int getNumOfArticles() const;
 
 	friend ostream& operator<<(ostream& os, const Researcher& researcher);
-	virtual void researcherOs(ostream& os) const;
+	virtual void researcherOs(ostream& os) const; 
 	bool operator>(const Researcher& other) const;
 
 private:
 	bool isDoctor;
-	Article** articles;
-	int logicalArticles;
-	int physicalArticles;
+	vector<Article> articles;
 };
 
 #endif

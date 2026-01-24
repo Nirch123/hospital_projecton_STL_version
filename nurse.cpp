@@ -1,44 +1,22 @@
-
-
 #include "nurse.h"
-#include "department.h"
 
-Nurse::Nurse(const char* name, const int id, const Date& birthdate, eGender gender, Department* department, int YoE) : Worker(name, id, birthdate, gender, department)
+Nurse::Nurse(const string& name, int id, const Date& birthdate, eGender gender, Department* department, int yearsOfExperience)
+	: Worker(name, id, birthdate, gender, department), yearsOfExperience(yearsOfExperience)
 {
-	this->YoE = YoE;
-	Worker::setWorkerType(Worker::eWorkerType::NURSE);
 }
 
-Nurse::~Nurse() 
+Nurse::Nurse(const Nurse& other) : Worker(other.name,other.id,other.birthdate,other.gender,other.department)
 {
-	cout << "\nDEBUG: in Nurse::~Nurse()";
+	this->yearsOfExperience = other.yearsOfExperience;
 }
 
-bool Nurse::setNurseYears(int YoE)
+int Nurse::getYearsOfExperience() const
 {
-	if (YoE > -1)
-	{
-		this->YoE = YoE;
-		return true;
-	}
-	else
-		return false; // invalid years of experience to be less than 0
+	return yearsOfExperience;
 }
-
-ostream& operator<<(ostream& os, const Nurse& nurse)
-{
-	if (&(nurse) == nullptr)
-		os << "Nurse not assigned";
-	else
-		os << nurse.getName();
-	return os;
-}
-
 
 void Nurse::WorkerTypeOs(ostream& os) const
 {
-	os << "\n\tTitle: Nurse" << "\n\tYoE : " << this->YoE;
+	os << "\n\tTitle: Nurse";
+	os << "\n\tYears of Experience: " << yearsOfExperience;
 }
-
-
-const int Nurse::getNurseYears() const { return YoE; }

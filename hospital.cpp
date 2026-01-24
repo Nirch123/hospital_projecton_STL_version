@@ -1,4 +1,7 @@
 #pragma warning (disable: 4996)
+using namespace std;
+#include <vector> 
+#include <string>
 #include "hospital.h"
 #include "worker.h"
 #include "doctor.h"
@@ -12,10 +15,9 @@
 
 int Hospital::idCounter = 100;
 
-Hospital::Hospital(const char* name, const char* rc_name) : researchCenter(rc_name)
+Hospital::Hospital(const string& name, const string& rc_name) : name(name), researchCenter(rc_name)
 {
-	this->name = new char[strlen(name)+1];
-	strcpy(this->name, name);
+
 	departments = new Department* [1];
 	staff = new Worker* [1];
 	patients = new Patient* [1];
@@ -34,18 +36,18 @@ Hospital::~Hospital()
 		delete departments[i]; // pointer only
 	delete departments;
 	delete[] staff; // check if it deletes all staff! (shows in DEBUG)
-	delete[] name;
+	/*delete[] name;*/
 }
 
-const char* Hospital::getName() const { return name; }
+const string& Hospital::getName() const { return name; }
 
 const int Hospital::getDepartmentsCount() const { return physicalDepartments; }
 
 const int Hospital::getStaffAmount() const { return physicalStaff; }
 
-const char* Hospital::getResearchCenterName() const { return researchCenter.getName(); }
+const string& Hospital::getResearchCenterName() const { return researchCenter.getName(); }
 
-bool Hospital::addDepartment(const char* departmentName)
+bool Hospital::addDepartment(const string& departmentName)
 {
 	if (physicalDepartments == logicalDepartments) // extension of departments array
 	{
@@ -67,7 +69,7 @@ bool Hospital::removeDepartment(const Department& department)
 		return false;
 	for (int i = 0; i < physicalDepartments; i++)
 	{
-		if (strcmp(department.getName(), departments[i]->getName()) == 0)
+		if ((department.getName() == departments[i]->getName()))
 		{
 			delete departments[i];
 			int j = i;
@@ -89,23 +91,23 @@ ostream& operator<<(ostream& os, const Hospital& hospital)
 	return os;
 }
 
-const char* Hospital::getDepartmentName(int num) const
+const string& Hospital::getDepartmentName(int num) const
 {
 	return departments[num]->getName();
 }
 
-const bool Hospital::doesDepartmentExist(const char* departmentName) const
+const bool Hospital::doesDepartmentExist(const string& departmentName) const
 {
 	for (int i = 0; i < physicalDepartments; i++)
 	{
-		if (strcmp(departmentName, departments[i]->getName()) == 0)
+		if (departmentName==departments[i]->getName())
 			return true;
 	}
 	return false;
 }
 
 
-const int Hospital::getDepartmentWorkersCount(const char* departmentName) const
+const int Hospital::getDepartmentWorkersCount(const string& departmentName) const
 {
 	if (doesDepartmentExist(departmentName) == true)
 	{
@@ -115,7 +117,7 @@ const int Hospital::getDepartmentWorkersCount(const char* departmentName) const
 		return -1;
 }
 
-const int Hospital::getDepartmentPatientsCount(const char* departmentName) const
+const int Hospital::getDepartmentPatientsCount(const string& departmentName) const
 {
 	if (doesDepartmentExist(departmentName) == true)
 	{
@@ -126,11 +128,11 @@ const int Hospital::getDepartmentPatientsCount(const char* departmentName) const
 }
 
 
-Department* Hospital::getDepartmentByName(const char* dName) const
+Department* Hospital::getDepartmentByName(const string& dName) const
 {
 	for (int i = 0; i < getDepartmentsCount(); i++)
 	{
-		if (strcmp(departments[i]->getName(), dName) == 0)
+		if (departments[i]->getName()== dName)
 			return (departments[i]);
 	}
 	return nullptr;
@@ -153,8 +155,8 @@ bool Hospital::addDoctor(Doctor& doctor)
 		delete[] staff;
 		staff = temp;
 	}
-	if (doesDepartmentExist(doctor.getWorkerDepartment()))
-		getDepartmentByName((staff[physicalStaff-1])->getWorkerDepartment())->addWorker(staff[physicalStaff-1]);	
+	if (doesDepartmentExist(doctor.getWorkerDepartmentByName()))
+		getDepartmentByName((staff[physicalStaff-1])->getWorkerDepartmentByName())->addWorker(staff[physicalStaff-1]);
 	return true;
 }
 
@@ -180,8 +182,8 @@ bool Hospital::addSurgeon(Surgeon& surgeon)
 		delete[] staff;
 		staff = temp;
 	}
-	if (doesDepartmentExist(surgeon.getWorkerDepartment()))
-		getDepartmentByName((staff[physicalStaff - 1])->getWorkerDepartment())->addWorker(staff[physicalStaff - 1]);
+	if (doesDepartmentExist(surgeon.getWorkerDepartmentByName()))
+		getDepartmentByName((staff[physicalStaff - 1])->getWorkerDepartmentByName())->addWorker(staff[physicalStaff - 1]);
 	return true;
 }
 
@@ -207,8 +209,8 @@ bool Hospital::addNurse(Nurse& nurse)
 		delete[] staff;
 		staff = temp;
 	}
-	if (doesDepartmentExist(nurse.getWorkerDepartment()))
-		getDepartmentByName((staff[physicalStaff - 1])->getWorkerDepartment())->addWorker(staff[physicalStaff - 1]);
+	if (doesDepartmentExist(nurse.getWorkerDepartmentByName()))
+		getDepartmentByName((staff[physicalStaff - 1])->getWorkerDepartmentByName())->addWorker(staff[physicalStaff - 1]);
 	return true;
 }
 
@@ -218,7 +220,7 @@ bool Hospital::operator+=(Nurse& nurse)
 	return true;
 }
 
-bool Hospital::addPatient(const char* name, int id, const Date& birthdate, Person::eGender gender,
+bool Hospital::addPatient(const string& name, int id, const Date& birthdate, Person::eGender gender,
 	const Date& dateofarrival, Department* department, Doctor* doctor, Nurse* nurse)
 {
 	Patient* p = new Patient(name, id, birthdate, gender, dateofarrival, department, doctor, nurse);
@@ -242,7 +244,7 @@ bool Hospital::addPatient(const char* name, int id, const Date& birthdate, Perso
 		return false;
 }
 
-Date& Hospital::createDate(int day, int month, int year)
+Date Hospital::createDate(int day, int month, int year)
 {
 	Date tempDate(day,month,year);
 	return tempDate;
@@ -296,7 +298,7 @@ bool Hospital::updatePatientInformation(Patient* p, Department* department, Doct
 	return true;
 }
 
-const char* Hospital::getPatientNameById(int id)
+const string& Hospital::getPatientNameById(int id)
 {
 	for (int i = 0; i < physicalPatients; i++)
 	{

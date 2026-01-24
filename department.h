@@ -2,6 +2,7 @@
 #define __DEPARTMENT_H
 
 #include <iostream>
+#include <string>
 using namespace std;
 
 class Person;
@@ -15,14 +16,14 @@ class Department
 {
 	public:
 		//enum eWorkerType {DOCTOR, NURSE, OTHER}; // should classification be under department? or under worker?
-		Department(const char *name);
-		Department(const Department& other) = delete;
-		virtual ~Department();
+		Department(const string& name);
+		//Department(const Department& other) = delete;
+		//virtual ~Department();
 		bool addWorker(Worker* worker);
 		bool addPatient(Patient* patient);
 		bool removeWorker(Worker* worker);
 		bool removePatient(Patient* patient);
-		const char* getName() const;
+		const string& getName() const;
 		const int getWorkersAmount() const;
 		const int getPatientsAmount() const;
 		const Worker& getWorkerByIndex(int index) const;
@@ -32,7 +33,7 @@ class Department
 		friend class Hospital;
 		
 	private:
-		char *name;
+		string name;
 		int physicalWorkers, logicalWorkers, physicalPatients, logicalPatients;
 		Patient** patientArr;
 		Worker** workerarr;

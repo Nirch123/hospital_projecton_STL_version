@@ -2,28 +2,31 @@
 #define __DOCTOR_H
 
 #include <iostream>
+#include <string> 
+#include "worker.h"
+
 using namespace std;
 
-#include "worker.h"
 class Department;
 class Surgeon;
 
-
 class Doctor : public Worker
 {
-	public:
-		Doctor(const char* name, const int id, const Date& birthdate, const char* expertise,
-			eGender gender, Department* department = nullptr);
-		Doctor(Doctor& other);
-		virtual ~Doctor();
-		void setDoctorExpertise(const char* expertise);
-		const char* getDoctorExpertise() const;
-		friend ostream& operator<<(ostream& os, const Doctor& doctor);
-		virtual void WorkerTypeOs(ostream& os) const;
+public:
+	Doctor(const string& name, const int id, const Date& birthdate, const string& expertise,
+		eGender gender, Department* department = nullptr);
 
+	Doctor(const Doctor& other);
+	virtual ~Doctor();
 
-	private:
-		char* expertise;
+	void setDoctorExpertise(const string& expertise);
+	const string& getDoctorExpertise() const; 
+
+	friend ostream& operator<<(ostream& os, const Doctor& doctor);
+	virtual void WorkerTypeOs(ostream& os) const override;
+
+private:
+	string expertise; 
 };
 
 #endif

@@ -3,19 +3,18 @@
 #include "visit.h"
 #include "department.h"
 
-Visit::Visit(Patient* patient, Date& date, Department* department,
-	const char* checkName, Doctor* doctor, Nurse* nurse)
-	: patient(patient), DOA(date), department(department)
+Visit::Visit(Patient* patient,const Date& date, Department* department,
+	const string& checkName, Doctor* doctor, Nurse* nurse)
+	: patient(patient), DateOfArrival(date), department(department)
 	  ,doctor(doctor), nurse(nurse)
 {
-	check = new Check(checkName);
 	surgery = nullptr;
 	visitType = CHECK;
 }
 
-Visit::Visit(Patient* patient, Date& date, Department* department,
+Visit::Visit(Patient* patient,const Date& date, Department* department,
 	bool isFast, int opRoom, Doctor* doctor, Nurse* nurse)
-	: patient(patient), DOA(date), department(department)
+	: patient(patient), DateOfArrival(date), department(department)
 	, doctor(doctor), nurse(nurse)
 {
 	surgery = new Surgery(isFast, opRoom);
@@ -23,13 +22,13 @@ Visit::Visit(Patient* patient, Date& date, Department* department,
 	visitType = SURGERY;
 }
 
-const char* Visit::getPatientDepartment() const { return department->getName(); }
+const string& Visit::getPatientDepartment() const { return department->getName(); }
 
 Doctor* Visit::getPatientDoctor() const { return doctor; }
 
 Nurse* Visit::getPatientNurse() const { return nurse; }
 
-const char* Visit::getPatientVisitPurpose() const // for printing
+const string& Visit::getPatientVisitPurpose() const // for printing
 { 
 	if (visitType == CHECK)
 		return "Check";
@@ -37,7 +36,7 @@ const char* Visit::getPatientVisitPurpose() const // for printing
 		return "Surgery";
 }
 
-const Date& Visit::getDateOfArrival() const { return DOA; }
+const Date& Visit::getDateOfArrival() const { return DateOfArrival; }
 
 bool Visit::setPatientDepartment(Department* new_department)
 {

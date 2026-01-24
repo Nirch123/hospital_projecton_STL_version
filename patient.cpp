@@ -9,72 +9,81 @@
 
 int Patient::PatientIdCounter = 1000;
 
-Patient::Patient(const char* name, int id, const Date& birthdate, eGender gender, const Date& dateofarrival, Department* department,
+Patient::Patient(const string& name, int id, const Date& birthdate, eGender gender, const Date& dateofarrival, Department* department,
 	Doctor* doctor, Nurse* nurse)
 	: Person(name, id, birthdate, gender), PatientId(PatientIdCounter++)
 {
-	physicalVisits = 0;
-	logicalVisits = 1;
-	visits = new Visit * [logicalVisits];
 }
 
-bool Patient::CreateCheckVisit(const Patient* patient, Date& date, Department* department,
-	const char* checkName, Doctor* doctor, Nurse* nurse)
+Patient::~Patient()
 {
-	if (department == NULL)
+	for (auto* v : visits)
+		delete v;
+	visits.clear();
+}
+
+bool Patient::CreateCheckVisit(const Patient* patient, const Date& date, Department* department,
+	const string& checkName, Doctor* doctor, Nurse* nurse)
+{
+	if (department == nullptr)
 		return false;
-	if (visits[logicalVisits - 1] != nullptr) // visits array expansion if full
-	{
-		logicalVisits *= 2;
-		Visit** temp = new Visit * [logicalVisits];
-		for (int i = 0; i < physicalVisits; i++)
-			temp[i] = visits[i];
-		delete[] visits;
-		visits = temp;
-	}
-	visits[physicalVisits] = new Visit(this, date, department, checkName, doctor, nurse);
+
+	visits.push_back(new Visit(const_cast<Patient*>(this), date, department, checkName.c_str(), doctor, nurse));
 	return true;
 }
 
-bool Patient::CreateSurgeryVisit(const Patient* patient, Date& date, Department* department,
+bool Patient::CreateSurgeryVisit(const Patient* patient, const Date& date, Department* department,
 	bool isFast, int opRoom, Doctor* doctor, Nurse* nurse)
 {
-	if (department == NULL)
+	if (department == nullptr)
 		return false;
-	if (visits[logicalVisits - 1] != nullptr) // visits array expansion if full
-	{
-		logicalVisits *= 2;
-		Visit** temp = new Visit * [logicalVisits];
-		for (int i = 0; i < physicalVisits; i++)
-			temp[i] = visits[i];
-		delete[] visits;
-		visits = temp;
-	}
-	visits[physicalVisits] = new Visit(this, date, department, isFast, opRoom, doctor, nurse);
-	return true;
-}
 
-Patient::~Patient() 
-{
-	cout << "\nDEBUG: in ~Patient()";
-	delete[] visits;
+	visits.push_back(new Visit(const_cast<Patient*>(this), date, department, isFast, opRoom, doctor, nurse));
+	return true;
 }
 
 const int Patient::getPatientId() const { return PatientId; }
 
-const char* Patient::getPatientDepartment() const { return visits[physicalVisits]->getPatientDepartment(); }
+string Patient::getPatientDepartment() const
+{
+	if (visits.empty()) return "None";
+	return visits.back()->getPatientDepartment(); 
+}
 
-Doctor* Patient::getPatientDoctor() const { return visits[physicalVisits]->getPatientDoctor(); }
+Doctor* Patient::getPatientDoctor() const
+{
+	if (visits.empty()) return nullptr;
+	return visits.back()->getPatientDoctor();
+}
 
-Nurse* Patient::getPatientNurse() const { return visits[physicalVisits]->getPatientNurse(); }
+Nurse* Patient::getPatientNurse() const
+{
+	if (visits.empty()) return nullptr;
+	return visits.back()->getPatientNurse();
+}
 
-const char* Patient::getPatientVisitPurpose() const { return visits[physicalVisits]->getPatientVisitPurpose(); }
+string Patient::getPatientVisitPurpose() const
+{
+	if (visits.empty()) return "No Visits Yet";
+	return visits.back()->getPatientVisitPurpose();
+}
 
-const Date& Patient::getDateOfArrival() const { return visits[physicalVisits]->getDateOfArrival(); }
+const Date& Patient::getDateOfArrival() const
+{
+
+	if (visits.empty())
+	{
+		static Date defaultDate(1, 1, 2000);
+		return defaultDate;
+	}
+	return visits.back()->getDateOfArrival();
+}
 
 bool Patient::setPatientDepartment(Department* new_department)
 {
-	visits[physicalVisits]->setPatientDepartment(new_department);
+	if (visits.empty()) return false;
+
+	visits.back()->setPatientDepartment(new_department);
 	if (new_department->doesPatientExist(this) == false)
 		new_department->addPatient(this);
 	return true;
@@ -82,49 +91,53 @@ bool Patient::setPatientDepartment(Department* new_department)
 
 bool Patient::setNurse(Nurse* new_nurse)
 {
-	visits[physicalVisits]->setNurse(new_nurse);
-	return true;
-}
-bool Patient::setDoctor(Doctor* new_doctor)
-{
-	visits[physicalVisits]->setDoctor(new_doctor);
+	if (visits.empty()) return false;
+	visits.back()->setNurse(new_nurse);
 	return true;
 }
 
-ostream& operator<<(ostream& os, const Patient& patient) // by refrence
+bool Patient::setDoctor(Doctor* new_doctor)
+{
+	if (visits.empty()) return false;
+	visits.back()->setDoctor(new_doctor);
+	return true;
+}
+
+ostream& operator<<(ostream& os, const Patient& patient)
 {
 	os << "\tId: " << patient.getId() <<
 		"\n\tName: " << patient.getName() <<
 		"\n\tGender: " << patient.getGender() <<
-		"\n\tDOB: " << patient.birthdate <<
-		"\n\tPatient Id : " << patient.getPatientId() <<
-		"\n\tDepartment: " << patient.getPatientDepartment() <<
-		"\n\tDOA: " << patient.getDateOfArrival() <<
-		"\n\tVisit reason: " << patient.getPatientVisitPurpose() <<
-		"\n\tAssigned Doctor: " << *patient.getPatientDoctor() <<
-		"\n\tAssigned Nurse: " << *patient.getPatientNurse();
+		"\n\tDOB: " << patient.getBirthDate() <<
+		"\n\tPatient Id : " << patient.getPatientId();
+
+	if (!patient.visits.empty())
+	{
+		os << "\n\tDepartment: " << patient.getPatientDepartment() <<
+			"\n\tDOA: " << patient.getDateOfArrival() <<
+			"\n\tVisit reason: " << patient.getPatientVisitPurpose();
+			//<< "\n\tAssigned Doctor: " << *patient.getPatientDoctor() <<
+			//"\n\tAssigned Nurse: " << *patient.getPatientNurse();
+	}
+	else
+	{
+		os << "\n\t(No visits logged yet)";
+	}
 	return os;
 }
 
-ostream& operator<<(ostream& os, const Patient* patient) // by pointer (for singular patient printing)
+ostream& operator<<(ostream& os, const Patient* patient)
 {
-	os << "\tId: " << patient->getId() <<
-		"\n\tName: " << patient->getName() <<
-		"\n\tGender: " << patient->getGender() <<
-		"\n\tDOB: " << patient->birthdate <<
-		"\n\tPatient Id : " << patient->getPatientId() <<
-		"\n\tDepartment: " << patient->getPatientDepartment() <<
-		"\n\tDOA: " << patient->getDateOfArrival() <<
-		"\n\tVisit reason: " << patient->getPatientVisitPurpose() <<
-		"\n\tAssigned Doctor: " << *patient->getPatientDoctor() <<
-		"\n\tAssigned Nurse: " << *patient->getPatientNurse();
-	return os;
+	if (!patient) return os;
+	return os << *patient;
 }
 
-
-void Patient::patientOs(ostream& os)
+void Patient::patientOs(ostream& os) const
 {
-	os << "\nDate of arrival: " << getDateOfArrival() <<
-		"\nVisit purpose: " << getPatientVisitPurpose() <<
-		"\nDepartment: " << getPatientDepartment();
+	if (!visits.empty())
+	{
+		os << "\nDate of arrival: " << getDateOfArrival() <<
+			"\nVisit purpose: " << getPatientVisitPurpose() <<
+			"\nDepartment: " << getPatientDepartment();
+	}
 }

@@ -2,25 +2,26 @@
 #define __ARTICLE_H
 
 #include <iostream>
+#include <string> 
 using namespace std;
+
 #include "date.h"
 
 class Article
 {
 public:
-	Article(const char* name, const char* magazineName, const Date& publishDate);
-	Article(const Article& other);
-	~Article();
+	Article(const string& name, const string& magazineName, const Date& publishDate);
 
-	const char* getName() const;
-	const char* getMagazineName() const;
+
+	const string& getName() const;         
+	const string& getMagazineName() const; 
 	const Date& getPublishDate() const;
 
 	friend ostream& operator<<(ostream& os, const Article& article);
 
 private:
-	char* name;
-	char* magazineName;
+	string name;          
+	string magazineName;  
 	Date publishDate;
 };
 

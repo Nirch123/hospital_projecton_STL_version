@@ -8,10 +8,8 @@ using namespace std;
 #include "patient.h"
 
 
-Department::Department(const char* name) 
+Department::Department(const string& name) : name(name)
 {
-	this->name = new char[strlen(name) + 1];
-	strcpy(this->name, name); 
 	physicalWorkers = 0;
 	logicalWorkers = 1;
 	workerarr = new Worker * [logicalWorkers] {nullptr};
@@ -20,12 +18,12 @@ Department::Department(const char* name)
 	patientArr = new Patient * [logicalPatients] {nullptr};
 }
 
-Department::~Department() 
-{
-	cout << "\nDEBUG: in ~Department()";
-	if (name != nullptr)
-		delete[] name; 
-}
+//Department::~Department() 
+//{
+//	cout << "\nDEBUG: in ~Department()";
+//	if (name != nullptr)
+//		delete[] name; 
+//}
 
 bool Department::addWorker(Worker* worker)
 {
@@ -44,7 +42,7 @@ bool Department::addWorker(Worker* worker)
 	}
 
 	workerarr[physicalWorkers] = worker;
-	if (strcmp(worker->getWorkerDepartment(),workerarr[physicalWorkers]->getWorkerDepartment()) != 0)
+	if ((worker->getWorkerDepartmentByName())!=(workerarr[physicalWorkers]->getWorkerDepartmentByName()))
 		worker->setWorkerDepartment(this); // make sure worker acknowledges it's new department
 	if (worker->getWorkerId() != 0) physicalWorkers++; // if workerId = 0 -> it's a temporary created in main only!!!
 	return true;
@@ -108,7 +106,7 @@ bool Department::removePatient(Patient* patient)
 	return false;
 }
 
-const char* Department::getName() const 
+const string& Department::getName() const 
 {
 	if (this == nullptr)
 		return "NONE";
@@ -132,7 +130,7 @@ ostream& operator<<(ostream& os, const Department& department)
 
 const bool Department::doesPatientExist(const Patient* patient)
 {
-	if (strcmp(patient->getPatientDepartment(),"NONE") == 0)
+	if (patient->getPatientDepartment()=="NONE")
 		return true; // if patient is in no department it's "undefined"
 	for (int i = 0; i < physicalPatients; i++)
 		if (patient->getId() == patientArr[i]->getId())

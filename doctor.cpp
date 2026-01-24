@@ -3,45 +3,43 @@
 #include "department.h"
 #include "worker.h"
 
-
-Doctor::Doctor(const char* name, const int id, const Date& birthdate, const char* expertise, 
-	eGender gender, Department* department) : Worker(name, id, birthdate, gender, department)
+Doctor::Doctor(const string& name, const int id, const Date& birthdate, const string& expertise,
+	eGender gender, Department* department)
+	: Worker(name, id, birthdate, gender, department), expertise(expertise)
 {
-	this->expertise = new char[strlen(expertise) + 1];
-	strcpy(this->expertise,expertise);
 	Worker::setWorkerType(Worker::eWorkerType::DOCTOR);
 }
 
-Doctor::Doctor(Doctor& other) : Worker(other)
+Doctor::Doctor(const Doctor& other)
+	: Worker(other.name,other.id,other.birthdate,other.gender,other.department), expertise(other.expertise) 
 {
-	expertise = new char[strlen(other.expertise) + 1];
-	strcpy(expertise, other.expertise);
 	Worker::setWorkerType(Worker::eWorkerType::DOCTOR);
 }
 
-Doctor::~Doctor() 
+Doctor::~Doctor()
 {
-	cout << "\nDEBUG: in ~Doctor()";
-	delete[] expertise;
 }
 
-void Doctor::setDoctorExpertise(const char* new_expertise) { strcpy(expertise, new_expertise); }
+void Doctor::setDoctorExpertise(const string& new_expertise)
+{
+	expertise = new_expertise; 
+}
 
-const char* Doctor::getDoctorExpertise() const { return expertise; }
+const string& Doctor::getDoctorExpertise() const
+{
+	return expertise;
+}
 
 ostream& operator<<(ostream& os, const Doctor& doctor)
 {
-	if (&(doctor) == nullptr)
+	if (&doctor == nullptr)
 		os << "Doctor not assigned";
 	else
 		os << "Dr." << doctor.getName();
 	return os;
 }
 
-
 void Doctor::WorkerTypeOs(ostream& os) const
 {
 	os << "\n\tTitle: Doctor\n\tExpertise: " << expertise;
-
 }
-

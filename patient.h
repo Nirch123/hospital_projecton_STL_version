@@ -2,9 +2,12 @@
 #define __PATIENT_H
 
 #include <iostream>
+#include <vector>
+#include <string>
+#include "person.h"
+
 using namespace std;
 
-#include "person.h"
 class Department;
 class Nurse;
 class Doctor;
@@ -13,31 +16,39 @@ class Visit;
 class Patient : public Person
 {
 public:
-	Patient(const char* name,  int id, const Date& birthdate, eGender gender, const Date& dateofarrival, Department* department,
-		Doctor* doctor=nullptr, Nurse* nurse=nullptr);
+	Patient(const string& name, int id, const Date& birthdate, eGender gender, const Date& dateofarrival, Department* department,
+		Doctor* doctor = nullptr, Nurse* nurse = nullptr);
+
 	virtual ~Patient();
-	const char* getPatientDepartment() const;
-	const char* getPatientVisitPurpose() const;
+
+	string getPatientDepartment() const;
+	string getPatientVisitPurpose() const;
 	const Date& getDateOfArrival() const;
 	Doctor* getPatientDoctor() const;
 	Nurse* getPatientNurse() const;
 	const int getPatientId() const;
+
 	bool setPatientDepartment(Department* department);
+
 	friend ostream& operator<<(ostream& os, const Patient& patient);
 	friend ostream& operator<<(ostream& os, const Patient* patient);
-	bool CreateCheckVisit(const Patient* patient, Date& date, Department* department,
-		const char* checkName, Doctor* doctor = nullptr, Nurse* nurse = nullptr);
-	bool CreateSurgeryVisit(const Patient* patient, Date& date, Department* department,
+
+	bool CreateCheckVisit(const Patient* patient, const Date& date, Department* department,
+		const string& checkName, Doctor* doctor = nullptr, Nurse* nurse = nullptr);
+
+	bool CreateSurgeryVisit(const Patient* patient, const Date& date, Department* department,
 		bool isFast, int opRoom, Doctor* doctor = nullptr, Nurse* nurse = nullptr);
-	virtual void patientOs(ostream& os);
+
+	virtual void patientOs(ostream& os) const; 
+
 	bool setNurse(Nurse* nurse);
 	bool setDoctor(Doctor* doctor);
+
 	friend class Hospital;
 
 protected:
-	Visit** visits;
-	int PatientId, physicalVisits, logicalVisits;
-
+	vector<Visit*> visits; 
+	int PatientId;
 
 private:
 	static int PatientIdCounter;

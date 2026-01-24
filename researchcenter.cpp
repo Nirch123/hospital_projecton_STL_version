@@ -3,62 +3,44 @@ using namespace std;
 #include "researchcenter.h"
 #include <iostream>
 
-Researchcenter::Researchcenter(const char* name)
+Researchcenter::Researchcenter(const string& name) : name(name)
 {
-	this->name = new char[strlen(name) + 1];
-	strcpy(this->name, name);
-
-	logicalResearchers = 2;
-	physicalResearchers = 0;
-	allResearchers = new Researcher * [logicalResearchers];
 }
 
 Researchcenter::~Researchcenter()
 {
-	cout << "\nDEBUG: in ~Researchcenter()";
-	for (int i = 0; i < physicalResearchers; i++)
-		delete allResearchers[i];
-
-	delete[] allResearchers;
-	delete[] name;
+	for (vector<Researcher*>::iterator itr = allResearchers.begin(); itr != allResearchers.end(); ++itr)
+	{
+		delete* itr; 
+	}
 }
 
-const char* Researchcenter::getName() const { return name; }
+const string& Researchcenter::getName() const { return name; }
 
-bool Researchcenter::addResearcher(Researcher* r)
+bool Researchcenter::addResearcher(const Researcher& r)
 {
-	if (physicalResearchers == logicalResearchers)
-	{
-		logicalResearchers *= 2;
-		Researcher** temp = new Researcher * [logicalResearchers];
-		for (int i = 0; i < physicalResearchers; i++)
-			temp[i] = allResearchers[i];
-		delete[] allResearchers;
-		allResearchers = temp;
-	}
-
-	allResearchers[physicalResearchers++] = r;
+	allResearchers.push_back(new Researcher(r));
 	return true;
 }
 
 const Researcher* Researchcenter::getResearcherById(int id) const
 {
-	for (int i = 0; i < physicalResearchers; i++)
+	for (vector<Researcher*>::const_iterator it = allResearchers.begin(); it != allResearchers.end(); ++it)
 	{
-	
-		if (allResearchers[i]->getId() == id)
-			return allResearchers[i];
+
+		if ((*it)->getId() == id)
+			return *it;
 	}
 	return nullptr;
 }
 
 bool Researchcenter::addArticleToResearcher(int researcherId, const Article& article)
 {
-	for (int i = 0; i < physicalResearchers; i++)
+	for (vector<Researcher*>::iterator itr = allResearchers.begin(); itr != allResearchers.end(); ++itr)
 	{
-		if (allResearchers[i]->getId() == researcherId)
+		if ((*itr)->getId() == researcherId)
 		{
-			return allResearchers[i]->addArticle(article);
+			return (*itr)->addArticle(article);
 		}
 	}
 	return false;
@@ -66,33 +48,29 @@ bool Researchcenter::addArticleToResearcher(int researcherId, const Article& art
 
 void Researchcenter::printAllResearchers() const
 {
-	if (physicalResearchers == 0)
+	if (allResearchers.empty())
 		cout << "\nNo researchers in center.";
 	else
 	{
 		cout << "\nList of Researchers in " << name << ":";
-		for (int i = 0; i < physicalResearchers; i++)
-			cout << "\n" << *allResearchers[i];
+
+		for (vector<Researcher*>::const_iterator itr = allResearchers.begin(); itr != allResearchers.end(); ++itr)
+		{
+
+			cout << "\n" << **itr;
+		}
 	}
 }
 
 ostream& operator<<(ostream& os, const Researchcenter& researchcenter)
 {
 	os << "Research Center: " << researchcenter.name
-		<< " (Researchers count: " << researchcenter.physicalResearchers << ")";
+		<< " (Researchers count: " << researchcenter.allResearchers.size() << ")";
 	return os;
-}
-
-bool HaveMoreArticle(const Researcher& r1, const Researcher& r2)
-{
-	return r1 > r2;
 }
 
 Researchcenter& Researchcenter::operator+=(const Researcher& other)
 {
-	Researcher* newR = new Researcher(other);
-
-	this->addResearcher(newR);
-
+	this->addResearcher(other);
 	return *this;
 }

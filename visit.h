@@ -2,6 +2,7 @@
 #define __VISIT_H
 
 #include <iostream>
+#include<string>
 using namespace std;
 
 #include "date.h"
@@ -16,13 +17,13 @@ class Visit
 {
 public:
 	enum eVisit {CHECK, SURGERY};
-	Visit(Patient* patient, Date& date, Department* department,
-		const char* checkName, Doctor* doctor = nullptr, Nurse* nurse = nullptr);
-	Visit(Patient* patient, Date& date, Department* department,
+	Visit(Patient* patient,const Date& date, Department* department,
+		const string& checkName, Doctor* doctor = nullptr, Nurse* nurse = nullptr);
+	Visit(Patient* patient,const Date& date, Department* department,
 		bool isFast, int opRoom ,Doctor* doctor = nullptr, Nurse* nurse = nullptr);
-	~Visit();
-	const char* getPatientDepartment() const;
-	const char* getPatientVisitPurpose() const;
+	//~Visit();
+	const string& getPatientDepartment() const;
+	const string& getPatientVisitPurpose() const;
 	const Date& getDateOfArrival() const;
 	Doctor* getPatientDoctor() const;
 	Nurse* getPatientNurse() const;
@@ -31,7 +32,7 @@ public:
 	bool setDoctor(Doctor* doctor);
 
 protected:
-	Date DOA; //Date Of Arrival
+	Date DateOfArrival; //Date Of Arrival
 	Department* department;
 	Patient* patient;
 	Doctor* doctor;

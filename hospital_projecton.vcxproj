@@ -157,6 +157,7 @@
     <ClInclude Include="researchcenter.h" />
     <ClInclude Include="researcher.h" />
     <ClInclude Include="surgeon.h" />
+    <ClInclude Include="visit.h" />
     <ClInclude Include="worker.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

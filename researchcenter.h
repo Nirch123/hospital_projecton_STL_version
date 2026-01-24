@@ -3,17 +3,20 @@
 
 using namespace std;
 #include <iostream>
+#include <vector> 
+#include <string> 
 #include "researcher.h" 
 
 class Researchcenter
 {
 public:
-	Researchcenter(const char* name);
+	Researchcenter(const string& name);
+
 	~Researchcenter();
 
-	const char* getName() const;
+	const string& getName() const;
 
-	bool addResearcher(Researcher* r);
+	bool addResearcher(const Researcher& r);
 
 	bool addArticleToResearcher(int researcherId, const Article& article);
 
@@ -23,16 +26,12 @@ public:
 
 	friend ostream& operator<<(ostream& os, const Researchcenter& researchcenter);
 
-	bool HaveMoreArticle(const Researcher& r1, const Researcher& r2);
-
 	Researchcenter& operator+=(const Researcher& researcher);
 
 private:
-	char* name;
+	string name;
 
-	Researcher** allResearchers;
-	int physicalResearchers;
-	int logicalResearchers;
+	vector<Researcher*> allResearchers;
 };
 
 #endif

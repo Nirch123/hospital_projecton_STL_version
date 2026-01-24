@@ -1,23 +1,22 @@
 #pragma warning (disable: 4996)
 
 #include "check.h"
-
+#include <string>
 #include <iostream>
 using namespace std;
 
-Check::Check(const char* checkName)
+Check::Check(const string& checkName)
 {
-	this->checkName = new char[strlen(checkName) + 1];
-	strcpy(this->checkName, checkName);
+	this->checkName = checkName;
 }
-Check::~Check()
-{
-	delete[] checkName;
-}
-const char* Check::getCheckType() const { return checkName; }
+//Check::~Check()
+//{
+//	delete[] checkName;
+//}
+const string& Check::getCheckType() const { return checkName; }
 
-bool Check::setCheckType(const char* checkName)
+bool Check::setCheckType(const string& checkName)
 {
-	strcpy(this->checkName, checkName);
+	this->checkName = checkName;
 	return true;
 }
