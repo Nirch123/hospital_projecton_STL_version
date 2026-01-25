@@ -269,7 +269,7 @@ void AddNurseFunc(Hospital& h)
 }
 
 void InsertPatientVisitFunc(Hospital& h)
-{
+{/*
 	char name[20], department[20], checkName[20];
 	int id, genderInt, day, month, year, visitD, visitM, visitY,
 		docId, nurseId, reason, opRoom;
@@ -412,10 +412,10 @@ void InsertPatientVisitFunc(Hospital& h)
 					h.getDoctorById(docId),
 					h.getNurseById(nurseId));
 		}
-	}
+	}*/
 	
 	//HARDCODED BENCHTEST
-	/*
+	
 	h.addPatient("Arik", 1010, h.createDate(0, 0, 0), Person::OTHER, h.createDate(19, 01, 2026), h.getDepartmentByIndex(0));
 	h.getPatientById(1010)->CreateCheckVisit(h.getPatientById(1010),
 		h.createDate(7, 6, 2026),
@@ -431,7 +431,7 @@ void InsertPatientVisitFunc(Hospital& h)
 		true, 201,
 		h.getDoctorById(500),
 		h.getNurseById(500));
-	*/
+	
 }
 
 void ShowDeparmentInfoFunc(Hospital& h)

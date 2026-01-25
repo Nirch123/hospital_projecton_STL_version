@@ -22,23 +22,23 @@ Patient::~Patient()
 	visits.clear();
 }
 
-bool Patient::CreateCheckVisit(const Patient* patient, const Date& date, Department* department,
-	const string& checkName, Doctor* doctor, Nurse* nurse)
+bool Patient::CreateCheckVisit(Patient* patient, const Date& date, Department* department,
+	string checkName, Doctor* doctor, Nurse* nurse)
 {
 	if (department == nullptr)
 		return false;
 
-	visits.push_back(new Visit(const_cast<Patient*>(this), date, department, checkName.c_str(), doctor, nurse));
+	visits.push_back(new Visit(patient, date, department, checkName, doctor, nurse));
 	return true;
 }
 
-bool Patient::CreateSurgeryVisit(const Patient* patient, const Date& date, Department* department,
+bool Patient::CreateSurgeryVisit(Patient* patient, const Date& date, Department* department,
 	bool isFast, int opRoom, Doctor* doctor, Nurse* nurse)
 {
 	if (department == nullptr)
 		return false;
 
-	visits.push_back(new Visit(const_cast<Patient*>(this), date, department, isFast, opRoom, doctor, nurse));
+	visits.push_back(new Visit(patient, date, department, isFast, opRoom, doctor, nurse));
 	return true;
 }
 

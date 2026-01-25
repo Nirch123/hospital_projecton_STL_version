@@ -10,12 +10,6 @@ using namespace std;
 
 Department::Department(const string& name) : name(name)
 {
-	physicalWorkers = 0;
-	logicalWorkers = 1;
-	workerarr = new Worker * [logicalWorkers] {nullptr};
-	physicalPatients = 0;
-	logicalPatients = 1;
-	patientArr = new Patient * [logicalPatients] {nullptr};
 }
 
 //Department::~Department() 
@@ -27,62 +21,38 @@ Department::Department(const string& name) : name(name)
 
 bool Department::addWorker(Worker* worker)
 {
-	for (int i = 0; i < physicalWorkers; i++)  // check if worker id is in department already
-		if (worker->getWorkerId() == workerarr[i]->getWorkerId())
+	for (; workerIterator != workerEnd; ++workerIterator)  // check if worker id is in department already
+		if (worker->getWorkerId() == (*workerIterator)->getWorkerId())
 			return false;
 
-	if (logicalWorkers == physicalWorkers) // check if department worker array is full and expand if nesscery
-	{
-		logicalWorkers = logicalWorkers * 2;
-		Worker** temp = new Worker * [logicalWorkers];
-		for (int i = 0; i < physicalWorkers; i++)
-			temp[i] = workerarr[i];
-		delete[] workerarr;
-		workerarr = temp;
-	}
-
-	workerarr[physicalWorkers] = worker;
-	if ((worker->getWorkerDepartmentByName())!=(workerarr[physicalWorkers]->getWorkerDepartmentByName()))
+	workers.push_back(worker);
+	if ((worker->getWorkerDepartmentByName())!= workers.back()->getWorkerDepartmentByName())
 		worker->setWorkerDepartment(this); // make sure worker acknowledges it's new department
-	if (worker->getWorkerId() != 0) physicalWorkers++; // if workerId = 0 -> it's a temporary created in main only!!!
 	return true;
 }
 
 bool Department::addPatient(Patient* patient)
 {
-	for (int i = 0; i < physicalPatients; i++)  
-		if (patient->getId() == patientArr[i]->getId())
+	for (; patientIterator != patientEnd; ++patientIterator)  
+		if (patient->getId() == (*patientIterator)->getId())
 			return false;
 
-	if (patientArr[logicalPatients - 1] != nullptr) 
-	{
-		logicalPatients = logicalPatients * 2;
-		Patient** temp = new Patient * [logicalPatients];
-		for (int i = 0; i < physicalPatients; i++)
-			temp[i] = patientArr[i];
-		delete[] patientArr;
-		patientArr = temp;
-	}
-
-	patientArr[physicalPatients] = patient;
-	physicalPatients++;
+	patients.push_back(patient);
 	return true;
 }
 
 bool Department::removeWorker(Worker* worker)
 {
-	for (int i = 0; i < physicalWorkers; i++)  // check if worker id is in department already
-		if (worker->getId() == workerarr[i]->getId())
+	for (; workerIterator != workerEnd; ++workerIterator)  // check if worker id is in department already
+		if (worker->getId() == (*workerIterator)->getId())
 		{
-			workerarr[i]->setWorkerDepartment(nullptr);
-			int j = i;
+			(*workerIterator)->setWorkerDepartment(nullptr);
 			do
 			{
-				workerarr[j] = workerarr[j + 1];
-				++j;
+				(*workerIterator) = ++(*workerIterator);
+				++workerIterator;
 			}
-			while (j < physicalWorkers);
-			--physicalWorkers;
+			while (workerIterator != workerEnd);
 			return true; // worker was found and removed from department
 		}
 		return false; // worker was not found
@@ -90,17 +60,15 @@ bool Department::removeWorker(Worker* worker)
 
 bool Department::removePatient(Patient* patient)
 {
-	for (int i = 0; i < physicalPatients; i++) 
-		if (patient->getId() == patientArr[i]->getId())
+	for (; patientIterator != patientEnd; ++patientIterator) 
+		if (patient->getId() == (*patientIterator)->getId())
 		{
-			patientArr[i]->setPatientDepartment(nullptr);
-			int j = i;
+			(*patientIterator)->setPatientDepartment(nullptr);
 			do
 			{
-				patientArr[j] = patientArr[j + 1];
-				++j;
-			} while (j < physicalPatients);
-			--physicalPatients;
+				(*patientIterator) = ++(*patientIterator);
+				++patientIterator;
+			} while (patientIterator != patientEnd);
 			return true; 
 		}
 	return false;
@@ -114,13 +82,13 @@ const string Department::getName() const
 		return name; 
 }
 
-const int Department::getWorkersAmount() const { return physicalWorkers; }
+const int Department::getWorkersAmount() const { return workers.size(); }
 
-const int Department::getPatientsAmount() const { return physicalPatients; }
+const int Department::getPatientsAmount() const { return patients.size(); }
 
-const Worker& Department::getWorkerByIndex(int index) const { return *workerarr[index]; }
+const Worker& Department::getWorkerByIndex(int index) const { return *(workers[index]); }
 
-const Patient& Department::getPatientByIndex(int index) const { return *patientArr[index]; }
+const Patient& Department::getPatientByIndex(int index) const { return *(patients[index]); }
 
 ostream& operator<<(ostream& os, const Department& department)
 {
@@ -132,8 +100,8 @@ const bool Department::doesPatientExist(const Patient* patient)
 {
 	if (patient->getPatientDepartment()=="NONE")
 		return true; // if patient is in no department it's "undefined"
-	for (int i = 0; i < physicalPatients; i++)
-		if (patient->getId() == patientArr[i]->getId())
+	for (; patientIterator != patientEnd; ++patientIterator)
+		if (patient->getId() == (*patientIterator)->getId())
 			return true;
 	return false;
 }

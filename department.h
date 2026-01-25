@@ -2,6 +2,7 @@
 #define __DEPARTMENT_H
 
 #include <iostream>
+#include <vector>
 #include <string>
 using namespace std;
 
@@ -34,8 +35,14 @@ class Department
 		
 	private:
 		string name;
-		int physicalWorkers, logicalWorkers, physicalPatients, logicalPatients;
-		Patient** patientArr;
-		Worker** workerarr;
+		//int physicalWorkers, logicalWorkers, physicalPatients, logicalPatients;
+		//Patient** patientArr;
+		//Worker** workerarr;
+		vector<Worker*> workers;
+		vector<Worker*>::iterator workerIterator = workers.begin();
+		vector<Worker*>::iterator workerEnd = workers.end();
+		vector<Patient*> patients;
+		vector<Patient*>::iterator patientIterator = patients.begin();
+		vector<Patient*>::iterator patientEnd = patients.end();
 };
 #endif

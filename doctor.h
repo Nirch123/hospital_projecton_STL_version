@@ -20,7 +20,7 @@ public:
 	virtual ~Doctor();
 
 	void setDoctorExpertise(const string& expertise);
-	const string& getDoctorExpertise() const; 
+	const string getDoctorExpertise() const; 
 
 	friend ostream& operator<<(ostream& os, const Doctor& doctor);
 	virtual void WorkerTypeOs(ostream& os) const override;

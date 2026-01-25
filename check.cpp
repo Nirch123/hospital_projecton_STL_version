@@ -13,7 +13,7 @@ Check::Check(const string& checkName)
 //{
 //	delete[] checkName;
 //}
-const string& Check::getCheckType() const { return checkName; }
+const string Check::getCheckType() const { return checkName; }
 
 bool Check::setCheckType(const string& checkName)
 {

@@ -25,7 +25,7 @@ void Doctor::setDoctorExpertise(const string& new_expertise)
 	expertise = new_expertise; 
 }
 
-const string& Doctor::getDoctorExpertise() const
+const string Doctor::getDoctorExpertise() const
 {
 	return expertise;
 }

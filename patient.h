@@ -33,10 +33,10 @@ public:
 	friend ostream& operator<<(ostream& os, const Patient& patient);
 	friend ostream& operator<<(ostream& os, const Patient* patient);
 
-	bool CreateCheckVisit(const Patient* patient, const Date& date, Department* department,
-		const string& checkName, Doctor* doctor = nullptr, Nurse* nurse = nullptr);
+	bool CreateCheckVisit(Patient* patient, const Date& date, Department* department,
+		string checkName, Doctor* doctor = nullptr, Nurse* nurse = nullptr);
 
-	bool CreateSurgeryVisit(const Patient* patient, const Date& date, Department* department,
+	bool CreateSurgeryVisit(Patient* patient, const Date& date, Department* department,
 		bool isFast, int opRoom, Doctor* doctor = nullptr, Nurse* nurse = nullptr);
 
 	virtual void patientOs(ostream& os) const; 

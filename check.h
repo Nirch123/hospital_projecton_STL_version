@@ -11,7 +11,7 @@ class Check
 public:
 	Check(const string& checkName);
 	~Check();
-	const string& getCheckType() const;
+	const string getCheckType() const;
 	bool setCheckType(const string& checkName);
 private:
 	//Check(Check& other);

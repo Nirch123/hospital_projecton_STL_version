@@ -17,49 +17,24 @@ int Hospital::idCounter = 100;
 
 Hospital::Hospital(const string& name, const string& rc_name) : name(name), researchCenter(rc_name)
 {
-
-	departments = new Department* [1];
-	staff = new Worker* [1];
-	patients = new Patient* [1];
-	logicalDepartments = 1;
-	physicalDepartments = 0;
-	physicalStaff = 0;
-	logicalStaff = 1;
-	physicalPatients = 0;
-	logicalPatients = 1;
 }	
 
 Hospital::~Hospital()
 {
 	cout << "DEBUG: in ~Hospital()";
-	for (int i = 0; i < physicalDepartments; i++)
-		delete departments[i]; // pointer only
-	delete departments;
-	delete[] staff; // check if it deletes all staff! (shows in DEBUG)
-	/*delete[] name;*/
 }
 
-const string& Hospital::getName() const { return name; }
+const string Hospital::getName() const { return name; }
 
-const int Hospital::getDepartmentsCount() const { return physicalDepartments; }
+const int Hospital::getDepartmentsCount() const { return departments.size(); }
 
-const int Hospital::getStaffAmount() const { return physicalStaff; }
+const int Hospital::getStaffAmount() const { return staff.size(); }
 
 const string& Hospital::getResearchCenterName() const { return researchCenter.getName(); }
 
 bool Hospital::addDepartment(const string& departmentName)
 {
-	if (physicalDepartments == logicalDepartments) // extension of departments array
-	{
-		logicalDepartments = logicalDepartments * 2;
-		Department** temp = new Department* [logicalDepartments];
-		for (int i = 0; i < physicalDepartments; i++)
-			temp[i] = departments[i];
-		delete[] departments;
-		departments = temp;
-	}
-	departments[physicalDepartments] = new Department(departmentName);
-	physicalDepartments++;
+	departments.push_back(new Department(departmentName));
 	return true;
 }
 
@@ -67,18 +42,15 @@ bool Hospital::removeDepartment(const Department& department)
 {
 	if (&department == nullptr)
 		return false;
-	for (int i = 0; i < physicalDepartments; i++)
+	for (; departmentIterator != departmentEnd; ++departmentIterator)
 	{
-		if ((department.getName() == departments[i]->getName()))
+		if ((department.getName() == (*departmentIterator)->getName()))
 		{
-			delete departments[i];
-			int j = i;
+			delete (*departmentIterator);
 			do
 			{
-				departments[j] = departments[j+1];
-				j++;
-			} while (j < physicalDepartments);
-			physicalDepartments--;
+				departmentIterator = ++departmentIterator;
+			} while (departmentIterator != departmentEnd);
 			return true; // department was found, deleted and others reorganized
 		}
 	}
@@ -91,16 +63,16 @@ ostream& operator<<(ostream& os, const Hospital& hospital)
 	return os;
 }
 
-const string& Hospital::getDepartmentName(int num) const
+const string Hospital::getDepartmentName(int num) const
 {
 	return departments[num]->getName();
 }
 
 const bool Hospital::doesDepartmentExist(const string& departmentName) const
 {
-	for (int i = 0; i < physicalDepartments; i++)
+	for (auto localIterator = departments.begin(); localIterator != departments.end(); ++localIterator)
 	{
-		if (departmentName==departments[i]->getName())
+		if (departmentName == (*localIterator)->getName())
 			return true;
 	}
 	return false;
@@ -144,19 +116,9 @@ bool Hospital::addDoctor(Doctor& doctor)
 {
 	Doctor* d = new Doctor(doctor);
 	d->setWorkerId(idCounter++);
-	staff[physicalStaff] = d;
-	++physicalStaff;
-	if (physicalStaff == logicalStaff) // extension of staff array
-	{
-		logicalStaff = logicalStaff * 2;
-		Worker** temp = new Worker * [logicalStaff];
-		for (int i = 0; i < physicalStaff; i++)
-			temp[i] = staff[i];
-		delete[] staff;
-		staff = temp;
-	}
+	staff.push_back(d);
 	if (doesDepartmentExist(doctor.getWorkerDepartmentByName()))
-		getDepartmentByName((staff[physicalStaff-1])->getWorkerDepartmentByName())->addWorker(staff[physicalStaff-1]);
+		(staff.back())->getWorkerDepartmentByAdress()->addWorker(staff.back());
 	return true;
 }
 
@@ -171,19 +133,9 @@ bool Hospital::addSurgeon(Surgeon& surgeon)
 {
 	Surgeon* s = new Surgeon(surgeon);
 	s->setWorkerId(idCounter++);
-	staff[physicalStaff] = s;
-	++physicalStaff;
-	if (physicalStaff == logicalStaff) // extension of staff array
-	{
-		logicalStaff = logicalStaff * 2;
-		Worker** temp = new Worker * [logicalStaff];
-		for (int i = 0; i < physicalStaff; i++)
-			temp[i] = staff[i];
-		delete[] staff;
-		staff = temp;
-	}
+	staff.push_back(s);
 	if (doesDepartmentExist(surgeon.getWorkerDepartmentByName()))
-		getDepartmentByName((staff[physicalStaff - 1])->getWorkerDepartmentByName())->addWorker(staff[physicalStaff - 1]);
+		(staff.back())->getWorkerDepartmentByAdress()->addWorker(staff.back());
 	return true;
 }
 
@@ -198,19 +150,9 @@ bool Hospital::addNurse(Nurse& nurse)
 {
 	Nurse* n = new Nurse(nurse);
 	n->setWorkerId(idCounter++);
-	staff[physicalStaff] = n;
-	++physicalStaff;
-	if (physicalStaff == logicalStaff) // extension of staff array
-	{
-		logicalStaff = logicalStaff * 2;
-		Worker** temp = new Worker * [logicalStaff];
-		for (int i = 0; i < physicalStaff; i++)
-			temp[i] = staff[i];
-		delete[] staff;
-		staff = temp;
-	}
+	staff.push_back(n);
 	if (doesDepartmentExist(nurse.getWorkerDepartmentByName()))
-		getDepartmentByName((staff[physicalStaff - 1])->getWorkerDepartmentByName())->addWorker(staff[physicalStaff - 1]);
+		(staff.back())->getWorkerDepartmentByAdress()->addWorker(staff.back());
 	return true;
 }
 
@@ -224,17 +166,7 @@ bool Hospital::addPatient(const string& name, int id, const Date& birthdate, Per
 	const Date& dateofarrival, Department* department, Doctor* doctor, Nurse* nurse)
 {
 	Patient* p = new Patient(name, id, birthdate, gender, dateofarrival, department, doctor, nurse);
-	patients[physicalPatients] = p;
-	++physicalPatients;
-	if (physicalPatients == logicalPatients) // extension of patients array
-	{
-		logicalPatients = logicalPatients * 2;
-		Patient** temp = new Patient * [logicalPatients];
-		for (int i = 0; i < physicalPatients; i++)
-			temp[i] = patients[i];
-		delete[] patients;
-		patients = temp;
-	}
+	patients.push_back(p);
 	if (department != NULL)
 	{
 		department->addPatient(p);
@@ -252,38 +184,44 @@ Date Hospital::createDate(int day, int month, int year)
 
 Nurse* Hospital::getNurseById(int id)
 {
-	if (physicalStaff == 0)
+	if (staff.size() == 0)
 		return nullptr;
-	for (int i = 0; i < physicalStaff; i++)
+	staffIterator = staff.begin();
+	staffEnd = staff.end();
+	for (; staffIterator != staffEnd; ++staffIterator)
 	{
-		if (staff[i]->getWorkerId() == id)
-			return dynamic_cast<Nurse*>(staff[i]);
+		if ((*staffIterator)->getWorkerId() == id)
+			return dynamic_cast<Nurse*>(*staffIterator);
 	}
 	return nullptr; // nurse not found
 }
 
 Doctor* Hospital::getDoctorById(int id)
 {
-	if (physicalStaff == 0)
+	if (staff.size() == 0)
 		return nullptr;
-	for (int i = 0; i < physicalStaff; i++)
+	staffIterator = staff.begin();
+	staffEnd = staff.end();
+	for (; staffIterator != staffEnd; ++staffIterator)
 	{
-		if (staff[i]->getWorkerId() == id)
-			return dynamic_cast<Doctor*>(staff[i]);
+		if ((*staffIterator)->getWorkerId() == id)
+			return dynamic_cast<Doctor*>(*staffIterator);
 	}
 	return nullptr; // doctor not found
 }
 
 Patient* Hospital::getPatientById(int id)
 {
-	if (physicalDepartments == 0)
+	if (departments.size() == 0)
 		return nullptr; // no departments yet
-	for (int i = 0; i < physicalDepartments; i++)
+	departmentIterator = departments.begin();
+	departmentEnd = departments.end();
+	for (; departmentIterator != departmentEnd; ++departmentIterator)
 	{
-		for (int j = 0; j < departments[i]->physicalPatients; j++)
+		for (int j = 0; j < (*departmentIterator)->getPatientsAmount(); j++)
 		{
-			if (id == (departments[i]->patientArr[j]->getId()))
-				return departments[i]->patientArr[j]; // patient found
+			if (id == ((*departmentIterator)->patients[j]->getId()))
+				return (*departmentIterator)->patients[j]; // patient found
 		}
 	}
 	return nullptr; // patient not found
@@ -300,10 +238,12 @@ bool Hospital::updatePatientInformation(Patient* p, Department* department, Doct
 
 const string& Hospital::getPatientNameById(int id)
 {
-	for (int i = 0; i < physicalPatients; i++)
+	patientIterator = patients.begin();
+	patientEnd = patients.end();
+	for (; patientIterator != patientEnd; ++patientIterator)
 	{
-		if (patients[i]->getId() == id)
-			return patients[i]->getName();
+		if ((*patientIterator)->getId() == id)
+			return (*patientIterator)->getName();
 	}
 	return "Patient ID was not found";
 }

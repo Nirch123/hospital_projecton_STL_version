@@ -18,7 +18,7 @@ class Visit
 public:
 	enum eVisit {CHECK, SURGERY};
 	Visit(Patient* patient,const Date& date, Department* department,
-		const string& checkName, Doctor* doctor = nullptr, Nurse* nurse = nullptr);
+		const string checkName, Doctor* doctor = nullptr, Nurse* nurse = nullptr);
 	Visit(Patient* patient,const Date& date, Department* department,
 		bool isFast, int opRoom ,Doctor* doctor = nullptr, Nurse* nurse = nullptr);
 	//~Visit();

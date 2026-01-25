@@ -4,10 +4,11 @@
 #include "department.h"
 
 Visit::Visit(Patient* patient,const Date& date, Department* department,
-	const string& checkName, Doctor* doctor, Nurse* nurse)
+	const string checkName, Doctor* doctor, Nurse* nurse)
 	: patient(patient), DateOfArrival(date), department(department)
 	  ,doctor(doctor), nurse(nurse)
 {
+	check = new Check(checkName);
 	surgery = nullptr;
 	visitType = CHECK;
 }

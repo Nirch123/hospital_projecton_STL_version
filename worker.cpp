@@ -9,8 +9,8 @@ Worker::Worker(const string& name, int id, const Date& birthdate, eGender gender
 	this->workerId = 0; 
 	this->workertype = OTHER;
 
-	if (department != nullptr)
-		setWorkerDepartment(department);
+	//if (department != nullptr)
+		//setWorkerDepartment(department);
 }
 
 Worker::Worker(const Worker& other)

@@ -13,8 +13,8 @@ public:
 	Article(const string& name, const string& magazineName, const Date& publishDate);
 
 
-	const string& getName() const;         
-	const string& getMagazineName() const; 
+	const string getName() const;         
+	const string getMagazineName() const; 
 	const Date& getPublishDate() const;
 
 	friend ostream& operator<<(ostream& os, const Article& article);

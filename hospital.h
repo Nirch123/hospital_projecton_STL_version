@@ -2,7 +2,8 @@
 #define __HOSPITAL_H
 
 #include <iostream>
-#include <string> 
+#include <string>
+#include <vector>
 using namespace std;
 
 #include "department.h";
@@ -15,8 +16,8 @@ class Hospital
 public:
 	Hospital(const string& name, const string& rc_name);
 	virtual ~Hospital();
-	const string& getName() const;
-	const string& getDepartmentName(int num) const;
+	const string getName() const;
+	const string getDepartmentName(int num) const;
 	const int getDepartmentsCount() const;
 	const int getDepartmentWorkersCount(const string& departmentName) const;
 	const int getDepartmentPatientsCount(const string& departmentName) const;
@@ -46,14 +47,21 @@ public:
 
 private:
 	string name;
-	int logicalDepartments,physicalDepartments, logicalStaff, physicalStaff, logicalPatients, physicalPatients;
-	Department** departments;
-	Worker** staff;
-	Patient** patients;
+	vector<Department*> departments;
+	vector<Department*>::iterator departmentIterator = departments.begin();
+	vector<Department*>::iterator departmentEnd = departments.end();
+	vector<Worker*> staff;
+	vector<Worker*>::iterator staffIterator = staff.begin();
+	vector<Worker*>::iterator staffEnd = staff.end();
+	vector<Patient*> patients;
+	vector<Patient*>::iterator patientIterator = patients.begin();
+	vector<Patient*>::iterator patientEnd = patients.end();
 	Researchcenter researchCenter;
 	Hospital(Hospital& other);
 	Date* date;
 	static int idCounter;
+
+
 };
 
 #endif
