@@ -31,7 +31,6 @@ public:
 	Patient* getPatientById(int id);
 	const string& getPatientNameById(int id);
 	bool addDepartment(const string& departmentName);
-	bool removeDepartment(const Department& department);
 	bool addDoctor(Doctor& doctor);
 	bool operator+=(Doctor& doctor);
 	bool addSurgeon(Surgeon& surgeon);

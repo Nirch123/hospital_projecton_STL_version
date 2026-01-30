@@ -33,7 +33,7 @@ ostream& operator<<(ostream& os, const Researcher& researcher)
 		os << "\n\tArticles List:";
 		for (vector<Article>::const_iterator it = researcher.articles.begin(); it != researcher.articles.end(); ++it)
 		{
-			os << "\n\t\t" << *it;
+			os << "\n\t# " << *it;
 		}
 	}
 	return os;

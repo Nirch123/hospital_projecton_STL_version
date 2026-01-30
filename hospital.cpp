@@ -38,25 +38,6 @@ bool Hospital::addDepartment(const string& departmentName)
 	return true;
 }
 
-bool Hospital::removeDepartment(const Department& department)
-{
-	if (&department == nullptr)
-		return false;
-	for (; departmentIterator != departmentEnd; ++departmentIterator)
-	{
-		if ((department.getName() == (*departmentIterator)->getName()))
-		{
-			delete (*departmentIterator);
-			do
-			{
-				departmentIterator = ++departmentIterator;
-			} while (departmentIterator != departmentEnd);
-			return true; // department was found, deleted and others reorganized
-		}
-	}
-	return false; // department was not found
-}
-
 ostream& operator<<(ostream& os, const Hospital& hospital)
 {
 	os << hospital.name;
