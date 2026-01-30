@@ -9,10 +9,7 @@ Check::Check(const string& checkName)
 {
 	this->checkName = checkName;
 }
-//Check::~Check()
-//{
-//	delete[] checkName;
-//}
+
 const string Check::getCheckType() const { return checkName; }
 
 bool Check::setCheckType(const string& checkName)

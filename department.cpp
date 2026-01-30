@@ -3,7 +3,6 @@
 using namespace std;
 
 #include "department.h"
-//#include "person.h"
 #include "worker.h"
 #include "patient.h"
 
@@ -12,12 +11,6 @@ Department::Department(const string& name) : name(name)
 {
 }
 
-//Department::~Department() 
-//{
-//	cout << "\nDEBUG: in ~Department()";
-//	if (name != nullptr)
-//		delete[] name; 
-//}
 
 bool Department::addWorker(Worker* worker)
 {

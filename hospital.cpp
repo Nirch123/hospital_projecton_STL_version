@@ -21,7 +21,6 @@ Hospital::Hospital(const string& name, const string& rc_name) : name(name), rese
 
 Hospital::~Hospital()
 {
-	cout << "DEBUG: in ~Hospital()";
 }
 
 const string Hospital::getName() const { return name; }

@@ -33,6 +33,7 @@ void AddResearcherFunc(Hospital& h, Researchcenter& rc);
 void AddPaperFunc(Researchcenter& rc, Hospital& h);
 void ShowResearchCenterInfoFunc(Researchcenter& rc);
 void HaveMoreArticleFunc(Researchcenter& rc);
+void HardcodedBenchmark(Hospital& h, Researchcenter& rc);
 
 
 
@@ -46,9 +47,7 @@ void main()
 	cin >> hospital_name;
 	cout << "Please enter research center name: ";
 	cin >> research_center_name;
-
 	Hospital h(hospital_name, research_center_name);
-
 	Researchcenter* rc = h.getResearchCenter();
 
 	//HARDCODED BENCHTEST
@@ -69,7 +68,8 @@ void main()
 			"\n(9)\tSearch patient by ID" <<
 			"\n(10)\tShow all research center staff" <<
 			"\n(11)\tCheck which researcher has more articles" <<
-			"\n(12)\tExit" <<
+			"\n(12)\tInsert hardcoded values (FOR TESTING)" <<
+			"\n(13)\tExit" <<
 			"\nUser Input: ";
 		cin >> select;
 		switch (select)
@@ -114,12 +114,15 @@ void main()
 			HaveMoreArticleFunc(*rc);
 			break;
 		case 12:
+			HardcodedBenchmark(h, *rc);
+			cout << "\nHardcoded values for debugging added!\n";
+		case 13:
 			break;
 		default:
 			cout << "\nInvalid input, try again\n";
 			break;
 		}
-	} while (select != 12);
+	} while (select != 13);
 }
 
 void AddDepartmentFunc(Hospital &h)
@@ -138,12 +141,6 @@ void AddDepartmentFunc(Hospital &h)
 		else
 			cout << "\nfailed to add department\n";
 	}
-	
-
-	// HARDCODED BENCHTEST
-	
-	//h.addDepartment("children");
-	//h.addDepartment("emergency");
 }
 
 void AddDoctorFunc(Hospital& h)
@@ -202,17 +199,6 @@ void AddDoctorFunc(Hospital& h)
 		h += temp;
 		cout << "\nDoctor was added succesfully\n";
 	}
-
-	
-
-	// HARDCODED BENCHTEST
-	
-	//Date tempD(7, 6, 2000);
-	//Doctor temp("Nir", 1234 , tempD, "first-aid", Person::MALE, h.getDepartmentByName("children"));
-	//h += temp;
-	//Surgeon temp2("Ritz", 4321, tempD, "brain", Person::MALE, h.getDepartmentByName("emergency"), 500);
-	//h += temp2;
-	
 } 
 
 void AddNurseFunc(Hospital& h)
@@ -258,16 +244,6 @@ void AddNurseFunc(Hospital& h)
 	Nurse temp(name, id, h.createDate(day, month, year), gender, h.getDepartmentByName(department), YoE);
 	h += temp;
 	cout << "\nNurse was added succesfully\n";
-	
-
-	// HARDCODED BENCHTEST
-	
-	//Date tempD(17, 10, 2001);
-	//Nurse temp("Liora", 1212, tempD,Person::FEMALE, h.getDepartmentByName("children"),5);
-	//Nurse temp2("Roni", 1331, tempD, Person::FEMALE, h.getDepartmentByName("emergency"),80);
-	//h += temp;
-	//h += temp2;
-	
 }
 
 void InsertPatientVisitFunc(Hospital& h)
@@ -418,25 +394,6 @@ void InsertPatientVisitFunc(Hospital& h)
 			cout << "\nNew visit for patient" << id << "was added succesfully\n";
 		}
 	}
-	
-	//HARDCODED BENCHTEST
-	
-	//h.addPatient("Arik", 1010, h.createDate(0, 0, 0), Person::OTHER, h.createDate(19, 01, 2026), h.getDepartmentByIndex(0));
-	//h.getPatientById(1010)->CreateCheckVisit(h.getPatientById(1010),
-	//	h.createDate(7, 6, 2026),
-	//	h.getDepartmentByName("children"),
-	//	"examination",
-	//	h.getDoctorById(0),
-	//	h.getNurseById(100));
-	//
-	//h.addPatient("Shlomi", 1221, h.createDate(0, 0, 0), Person::OTHER, h.createDate(19, 01, 2026), h.getDepartmentByName("emergency"));
-	//h.getPatientById(1221)->CreateSurgeryVisit(h.getPatientById(1221),
-	//	h.createDate(8, 2, 2025),
-	//	h.getDepartmentByName("emergency"),
-	//	true, 201,
-	//	h.getDoctorById(500),
-	//	h.getNurseById(500));
-	
 }
 
 void ShowDeparmentInfoFunc(Hospital& h)
@@ -559,11 +516,6 @@ void AddResearcherFunc(Hospital& h, Researchcenter& rc)
 
 	rc += temp;
 	cout << "\nResearcher added successfully!\n";
-	
-	//Hard Coded:
-	//Researcher temp("Yossi", 315, h.createDate(1, 6, 1996), Person::MALE, true);
-	//rc += temp;
-
 }
 
 void AddPaperFunc(Researchcenter& rc, Hospital& h)
@@ -591,11 +543,6 @@ void AddPaperFunc(Researchcenter& rc, Hospital& h)
 		cout << "\nArticle added successfully!\n";
 	else
 		cout << "\nFailed to add article.\n";
-	
-	//Hard Coded:
-	//Article newArticle("articleName", "magazineName", h.createDate(27, 4, 2026));
-	//rc.addArticleToResearcher(315, newArticle);
-
 }
 
 void ShowResearchCenterInfoFunc(Researchcenter& rc)
@@ -647,4 +594,40 @@ void HaveMoreArticleFunc(Researchcenter& rc)
 	else
 		cout << "\nThe Researchers have the same amount of articles.\n";
 
+}
+
+void HardcodedBenchmark(Hospital& h, Researchcenter& rc)
+{
+	h.addDepartment("children");
+	h.addDepartment("emergency");
+	Date date1(7, 6, 2000);
+	Doctor d("Nir", 1234, date1, "first-aid", Person::MALE, h.getDepartmentByName("children"));
+	h += d;
+	Surgeon s("Ritz", 4321, date1, "brain", Person::MALE, h.getDepartmentByName("emergency"), 500);
+	h += s;
+	Date date2(17, 10, 2001);
+	Nurse n1("Liora", 1212, date2, Person::FEMALE, h.getDepartmentByName("children"), 5);
+	Nurse n2("Roni", 1331, date2, Person::FEMALE, h.getDepartmentByName("emergency"), 80);
+	h += n1;
+	h += n2;
+	h.addPatient("Arik", 1010, h.createDate(0, 0, 0), Person::OTHER, h.createDate(19, 01, 2026), h.getDepartmentByIndex(0));
+	h.getPatientById(1010)->CreateCheckVisit(h.getPatientById(1010),
+		h.createDate(7, 6, 2026),
+		h.getDepartmentByName("children"),
+		"examination",
+		h.getDoctorById(0),
+		h.getNurseById(100));
+
+	h.addPatient("Shlomi", 1221, h.createDate(0, 0, 0), Person::OTHER, h.createDate(19, 01, 2026), h.getDepartmentByName("emergency"));
+	h.getPatientById(1221)->CreateSurgeryVisit(h.getPatientById(1221),
+		h.createDate(8, 2, 2025),
+		h.getDepartmentByName("emergency"),
+		true, 201,
+		h.getDoctorById(500),
+		h.getNurseById(500));
+
+	Researcher r1("Yossi", 315, h.createDate(1, 6, 1996), Person::MALE, true);
+	rc += r1;
+	Article newArticle("articleName", "magazineName", h.createDate(27, 4, 2026));
+	rc.addArticleToResearcher(315, newArticle);
 }
