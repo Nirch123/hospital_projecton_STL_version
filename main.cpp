@@ -616,6 +616,7 @@ void ShowResearchCenterInfoFunc(Researchcenter& rc)
 			cout << "\n" << **itr;
 		}
 	}
+	cout << "\n";
 }
 
 void HaveMoreArticleFunc(Researchcenter& rc)
