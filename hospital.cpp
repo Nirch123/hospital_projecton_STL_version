@@ -171,7 +171,9 @@ Nurse* Hospital::getNurseById(int id)
 	staffEnd = staff.end();
 	for (; staffIterator != staffEnd; ++staffIterator)
 	{
-		if ((*staffIterator)->getWorkerId() == id)
+		if ((*staffIterator)->getWorkerId() == id) // check by worker ID
+			return dynamic_cast<Nurse*>(*staffIterator);
+		else if ((*staffIterator)->getId() == id) // check by personal ID
 			return dynamic_cast<Nurse*>(*staffIterator);
 	}
 	return nullptr; // nurse not found
@@ -187,8 +189,26 @@ Doctor* Hospital::getDoctorById(int id)
 	{
 		if ((*staffIterator)->getWorkerId() == id)
 			return dynamic_cast<Doctor*>(*staffIterator);
+		else if ((*staffIterator)->getId() == id) // check by personal ID
+			return dynamic_cast<Doctor*>(*staffIterator);
 	}
 	return nullptr; // doctor not found
+}
+
+Worker* Hospital::getStaffById(int id)
+{
+	if (staff.size() == 0)
+		return nullptr;
+	staffIterator = staff.begin();
+	staffEnd = staff.end();
+	for (; staffIterator != staffEnd; ++staffIterator)
+	{
+		if ((*staffIterator)->getWorkerId() == id) // check by worker ID
+			return dynamic_cast<Worker*>(*staffIterator);
+		else if ((*staffIterator)->getId() == id) // check by personal ID
+			return dynamic_cast<Worker*>(*staffIterator);
+	}
+	return nullptr; // staff not found
 }
 
 Patient* Hospital::getPatientById(int id)

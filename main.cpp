@@ -129,10 +129,15 @@ void AddDepartmentFunc(Hospital &h)
 	cout << "\nInsert department name: ";
 	cin >> departmentName;
 	Department temp(departmentName);
-	if (h.addDepartment(departmentName) == true)
-		cout << "\nDepartment " << departmentName << " was added succesfully\n";
+	if (h.doesDepartmentExist(departmentName) == true)
+		cout << "\nERROR: Department already exists! no changes made\n";
 	else
-		cout << "\nfailed to add department\n";
+	{
+		if (h.addDepartment(departmentName) == true)
+			cout << "\nDepartment " << departmentName << " was added succesfully\n";
+		else
+			cout << "\nfailed to add department\n";
+	}
 	
 
 	// HARDCODED BENCHTEST
@@ -151,6 +156,12 @@ void AddDoctorFunc(Hospital& h)
 	cin >> name;
 	cout << "\nId: ";
 	cin >> id;
+	if (h.getStaffAmount() != 0)
+		if (h.getStaffById(id)->getId() == id)
+		{
+			cout << "\nERROR: Staff already exists with this ID!, no changes made\n";
+			return;
+		}
 	cout << "Gender: (0) Male (1) Female (2) Other: ";
 	cin >> genderInt;
 	switch (genderInt)
@@ -214,6 +225,12 @@ void AddNurseFunc(Hospital& h)
 	cin >> name;
 	cout << "\nId: ";
 	cin >> id;
+	if (h.getStaffAmount() != 0) 
+		if (h.getStaffById(id)->getId() == id)
+		{
+			cout << "\nERROR: Staff already exists with this ID!, no changes made\n";
+			return;
+		}
 	cout << "Gender: (0) Male (1) Female (2) Other: ";
 	cin >> genderInt;
 	switch (genderInt)

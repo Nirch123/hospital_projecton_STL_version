@@ -29,7 +29,13 @@ const string& Person::getName() const
 	return name;
 }
 
-const int Person::getId() const { return id; }
+const int Person::getId() const 
+{
+	if (this != NULL)
+		return id;
+	else
+		return -1;
+}
 
 const string Person::getGender() const // because of returning of local variables, we have to copy the string here (not by reference)
 { 
