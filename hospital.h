@@ -26,6 +26,7 @@ public:
 	const string& getResearchCenterName() const;
 	Department* getDepartmentByName(const string& dName) const;
 	Department* getDepartmentByIndex(const int index) const;
+	Worker* getStaffById(int id);
 	Nurse* getNurseById(int id);
 	Doctor* getDoctorById(int id);
 	Patient* getPatientById(int id);
