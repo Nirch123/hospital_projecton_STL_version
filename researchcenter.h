@@ -10,19 +10,21 @@ using namespace std;
 class Researchcenter
 {
 public:
-	Researchcenter(const string& name);
+	Researchcenter(const string& name, int ResearcherCount);
 
 	~Researchcenter();
 
 	const string& getName() const;
+
+	const int getResearcherCount() const;
+
+	const vector<Researcher*> getResearchersVector() const;
 
 	bool addResearcher(const Researcher& r);
 
 	bool addArticleToResearcher(int researcherId, const Article& article);
 
 	const Researcher* getResearcherById(int id) const;
-
-	void printAllResearchers() const;
 
 	friend ostream& operator<<(ostream& os, const Researchcenter& researchcenter);
 
@@ -32,6 +34,8 @@ private:
 	string name;
 
 	vector<Researcher*> allResearchers;
+
+	int ResearcherCount;
 };
 
 #endif

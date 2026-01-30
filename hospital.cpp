@@ -15,7 +15,7 @@ using namespace std;
 
 int Hospital::idCounter = 100;
 
-Hospital::Hospital(const string& name, const string& rc_name) : name(name), researchCenter(rc_name)
+Hospital::Hospital(const string& name, const string& rc_name) : name(name), researchCenter(rc_name,0)
 {
 }	
 

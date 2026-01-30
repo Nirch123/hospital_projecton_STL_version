@@ -3,7 +3,7 @@ using namespace std;
 #include "researchcenter.h"
 #include <iostream>
 
-Researchcenter::Researchcenter(const string& name) : name(name)
+Researchcenter::Researchcenter(const string& name, int ResearcherCount) : name(name), ResearcherCount(0)
 {
 }
 
@@ -17,9 +17,14 @@ Researchcenter::~Researchcenter()
 
 const string& Researchcenter::getName() const { return name; }
 
+const int Researchcenter::getResearcherCount() const { return ResearcherCount; }
+
+const vector<Researcher*> Researchcenter::getResearchersVector() const { return allResearchers; }
+
 bool Researchcenter::addResearcher(const Researcher& r)
 {
 	allResearchers.push_back(new Researcher(r));
+	ResearcherCount++;
 	return true;
 }
 
@@ -46,22 +51,6 @@ bool Researchcenter::addArticleToResearcher(int researcherId, const Article& art
 	return false;
 }
 
-void Researchcenter::printAllResearchers() const
-{
-	if (allResearchers.empty())
-		cout << "\nNo researchers in center.";
-	else
-	{
-		cout << "\nList of Researchers in " << name << ":";
-
-		for (vector<Researcher*>::const_iterator itr = allResearchers.begin(); itr != allResearchers.end(); ++itr)
-		{
-
-			cout << "\n" << **itr;
-		}
-	}
-}
-
 ostream& operator<<(ostream& os, const Researchcenter& researchcenter)
 {
 	os << "Research Center: " << researchcenter.name
@@ -74,3 +63,4 @@ Researchcenter& Researchcenter::operator+=(const Researcher& other)
 	this->addResearcher(other);
 	return *this;
 }
+

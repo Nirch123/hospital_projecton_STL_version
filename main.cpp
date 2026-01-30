@@ -586,8 +586,19 @@ void ShowResearchCenterInfoFunc(Researchcenter& rc)
 	
 	cout << "\nResearch Center Information System   ";
 	
-	rc.printAllResearchers();
-	
+	if (rc.getResearcherCount() == 0)
+		cout << "\nNo researchers in center.";
+	else
+	{
+		cout << "\nList of Researchers in " << rc.getName() << ":";
+		vector<Researcher*> R = rc.getResearchersVector();
+
+		for (vector<Researcher*>::const_iterator itr = R.begin(); itr != R.end(); ++itr)
+		{
+
+			cout << "\n" << **itr;
+		}
+	}
 }
 
 void HaveMoreArticleFunc(Researchcenter& rc)
